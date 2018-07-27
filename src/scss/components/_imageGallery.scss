@@ -1,0 +1,53 @@
+.gallery {
+	padding: 1em 0;
+	display: grid;
+	grid-gap: 5px;
+	grid-template-columns: repeat(auto-fill, 250px);
+	grid-auto-rows: 250px;
+	grid-auto-flow: row;
+	justify-content: center;
+	width: 100%;
+	@include bp($bp-tab-mid) {
+		width: 90%;
+		margin: 3em auto;
+	}
+}
+
+.gallery__item {
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	position: relative;
+}
+
+.gallery__img {
+	display: block;
+	width: 600px;
+}
+
+.galler__img--image-pick {
+	display: block;
+	width: 300px;
+}
+
+.gallery--image-pick {
+	grid-template-columns: repeat(auto-fill, 150px); 
+	grid-auto-rows: 150px;
+	margin: 0 auto;
+}
+
+.gallery__container--image-pick {
+	position: absolute;
+	background-color: $white;
+	box-shadow: $box-shadow;
+	left: 0;
+	top: 8em;
+	width: 90%;
+	margin: 0 5%;
+	@include bp($bp-tab-mid) {
+		width: 50%;
+		margin: 0 25%;
+	}
+}

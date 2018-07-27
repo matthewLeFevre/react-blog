@@ -1,0 +1,13 @@
+.img__logo {
+  display: block;
+  width: 120px;
+  z-index: $z-3;
+  @include bp($bp-tab-mid) {
+    position: absolute;
+    top: -25px;
+	}
+}
+
+.img__post {
+  max-width: 100%;
+}

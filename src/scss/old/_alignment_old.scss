@@ -1,0 +1,40 @@
+// Text align
+
+.txt {
+  &--center {
+    text-align: center;
+  }
+  &--left {
+    text-align: left;
+  }
+  &--right {
+    text-align: right;
+  }
+}
+// .center is deprecated use something else
+.center { 
+  text-align: center;
+}
+
+.none {
+  display: none;
+}
+
+.in-block {
+  display: inline-block;
+}
+
+// This class needs to be replaced with something more reusable
+.home-view {
+  @include bp($bp-tab-mid) {
+    margin-top: 4em;
+  }
+}
+
+.any-view {
+  margin-top: 4em;
+}
+
+.round-corners {
+  border-radius: $br;
+}

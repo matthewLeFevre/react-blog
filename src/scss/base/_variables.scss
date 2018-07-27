@@ -1,0 +1,169 @@
+// Variables
+//
+
+
+// Colors
+
+// css patterns basic colors
+// 
+// feel free to add or change the values here
+// if you want your own colors to effect css-patterns
+// classes it is recommended you add them to the 
+// '$colors' list 
+// *WARNING*: Other lists are dependent on this list
+// Button Colors are no longer dependent
+
+$white:    			#fff;
+$black:    			#000;
+$grey: 				#697479;
+$blue: 				#084887;
+$green: 			#56BF00;
+$yellow: 			#FFCC42;
+$red: 				#D33115;
+$purple:			#5F0F40;
+
+// Theme Colors
+
+$theme-red-opac:    rgba(220,48,75, .85);
+$theme-red:         #DC304b;
+$theme-orange:      #F95F62;
+$theme-light:       #F0F0F1;
+$theme-grey:        #343F4B;
+$theme-black:       #1F2D3D;
+
+// Add your colors so you can use the
+// '.bg' and '.txt' classes
+
+$colors: (
+	"grey": 				$grey,
+	"blue": 				$blue,
+	"green": 				$green,
+	"yellow":				$yellow,
+	"red":					$red,
+	"purple":   		$purple,
+	"white":    		$white,
+	"theme-red": 		$theme-red,
+	"theme-orange": $theme-orange,
+	"theme-light": 	$theme-light,
+	"theme-grey": 	$theme-grey,
+	"theme-black": 	$theme-black,
+);
+
+// Button colors
+// The `$colors` map can be used to generate 
+// button variations or this default button 
+// map can be used to 
+
+$btn-colors: (
+	"primary": 	$blue,
+	"secondary":$green,
+	"success": 	$green,
+	"neutral": $blue,
+	"danger": 	$red,
+	"warning": 	$yellow,
+	"action": $theme-red,
+	"action_alt": $theme-grey,
+);
+
+// Not a requirement to have these
+// greys but they are here if you need them
+
+$grey-100: 		#C3C7C9;
+$grey-200: 		#91999D;
+$grey-300: 		#697479;
+$grey-400: 		#5A676C;
+$grey-500: 		#4A585E;
+
+// This list can be deleted it is not used
+// in any other area of the library
+
+$grey-scale: (
+	"100": 			$grey-100,
+	"200": 			$grey-200,
+	"300": 			$grey-300,
+	"400": 			$grey-400,
+	"500": 			$grey-500
+);
+
+
+
+// Typography
+//
+// Add your own fonts or alter
+// these pre-assigned ones to fit 
+// your application needs
+
+$alexBrush: 'Alex Brush', cursive;
+$openSans: 'Open Sans', sans-serif;
+$cardo: 'Cardo', serif;
+
+$main-font: $openSans;
+$accent: 		$alexBrush;
+$body:			$cardo;
+
+// Recommended sizes
+$tiny: 				.75em;
+$sml:  				.90em;
+$initial: 			1em;
+$main: 				1.125em;
+$mid:  				1.25em;
+$mdm:  				1.6em;
+$mod:  				1.9em;
+$lrg:  				2.5em;
+
+$sizes: (
+	"tiny": 	$tiny,
+	"sml": 		$sml,
+	"initial": 	$initial,
+	"main": 	$main,
+	"mid": 		$mid,
+	"mdm": 		$mdm,
+	"mod": 		$mod,
+	"lrg": 		$lrg,
+);
+
+// z-index
+$z-0: 0;
+$z-05: 5;
+$z-1: 10;
+$z-2: 20;
+$z-3: 30;
+$z-4: 40;
+$z-5: 50;
+
+
+
+// Border Radius
+
+$br: 	 .25em;
+
+
+
+// Breakpoints
+
+$bp-tiny: 40em;
+$bp-sml:  48em;
+$bp-mdm:  62.5em;
+$bp-lrg:  75em;
+
+$break-points: (
+	"tiny": $bp-tiny,
+	"sml":  $bp-sml,
+	"mdm":  $bp-mdm,
+	"lrg":  $bp-lrg
+);
+
+
+
+// Grid Variables -- Use caution when changing --
+$columns: 12;
+$limited-grid-size: 75em;
+$padded-grid-padding: .75em;
+
+// button types
+
+$btn-types: "full" "icon" "round" "long";
+
+// Panel types
+
+$panel-types: "basic" "responsive";

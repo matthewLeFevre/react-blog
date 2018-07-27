@@ -1,0 +1,138 @@
+@mixin form ($type, $limit: 300px, $padding: 25px) {
+    min-height: 50px;
+    min-width: 300px;
+    padding: $padding;
+    @if $type == "form" {
+        width: 100%;
+    } @else if $type == "form--limited" {
+        max-width: $limit;
+        margin: 0 auto;
+    } 
+}
+
+.form {
+    @include form('form');
+}
+
+.form--no-padding {
+    @include form('form', 10px, 0);
+}
+
+.form--sml {
+    @include form('form--limited', 500px);
+}
+.form--lrg {
+    @include form('form--limited', 1000px);
+}
+.form__pair { margin: 1em 0; }
+.form__label { 
+    display: block;
+    &.side {
+        display: inline-block;
+    }
+}
+.form__field {
+    border: 0;
+    padding: .5em;
+    &:focus {
+        outline-color: 0;
+    }
+    &.full {
+        display: block;
+        width: 100%;
+    }
+}
+
+.input--text {
+    border: 0;
+    padding: .35em;
+    background-color: $white;
+    border:  $theme-grey 3px solid;
+    border-radius: $br;
+    &:focus {
+        outline-color: 0;
+    }
+    &.full {
+        display: block;
+        width: 100%;
+    }
+    &.breath {
+        margin: .25em 0;
+    }
+}
+
+.input--radio__group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input--radio {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.input--radio:checked + .label--radio::before {
+    background-color: $black;
+}
+
+.input--radio__set {
+    padding: .5em;
+}
+.label--radio {
+    font-size: $main;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    &:after {
+        content: '';
+        position: absolute;
+        height: $sml;
+        width: $sml;
+        border: $black 1px solid;
+        vertical-align: middle;
+        border-radius: 50%;
+        transition: background-color 200ms ease;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        height: 11px;
+        width: 11px;
+        background-color: transparent;
+        border-radius: 50%;
+    }
+}
+.label--radio__text {
+    margin-bottom: .5em;
+    display: block;
+}
+
+.label--checkbox {
+    font-size: $main;
+    cursor: pointer;
+}
+
+.label--checkbox::before {
+    content: '';
+    display: inline-block;
+    height: $sml;
+    width: $sml;
+    border: $grey-500 1px solid;
+    margin: 0 .75em;
+    vertical-align: middle;
+    border-radius: 3px;
+    transition: background-color 200ms ease;
+}
+.input--checkbox { 
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.input--checkbox:checked + .label--checkbox::before {
+    background-color: $green;
+}
+

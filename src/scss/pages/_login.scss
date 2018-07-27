@@ -1,0 +1,12 @@
+.login__container {
+  padding: 2em;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  // height: 70vh;
+}
+
+.login__form__container {
+  max-width: 500px;
+}

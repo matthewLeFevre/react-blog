@@ -1,0 +1,111 @@
+.post__container {
+  @include flex(row, wrap, center, center);
+  padding: .25em;
+  @include bp-mdm {justify-content: flex-start;}
+  @include bp-lrg {justify-content: center;}
+  resize: horizontal;
+}
+
+.recent-posts {
+  background-color: $theme-light;
+  @include bp_sml {
+    border-right: 20px solid $theme-orange;
+  }
+  
+}
+.recent-post__heading {
+  padding: .4em 1em;
+}
+
+
+// .post--banner {
+//   max-height: 40vh; 
+//   overflow: hidden;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   position: relative;
+//   &::after{
+//     content: "";
+//     display: block;
+//     position: absolute;
+//     top: 0;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     background-color: rgba(0,0,0,.3);
+//   }
+// }
+
+// .post--banner--image {
+//   display: block;
+//   max-width: 100%;
+//   height: auto;
+//   position: relative;
+
+  
+// }
+
+// .post--title--group {
+//   position: absolute;
+//   color: $white;
+//   z-index: $z-05;
+//   font-family: $alexBrush;
+//   padding: 1em;
+// }
+// .post--title {
+//   font-family: $ff-extr;
+//   font-size: $x2lrg;
+//   margin-bottom: 0;
+// }
+
+// .post--date {
+//   color: $orange;
+//   font-weight: 700;
+//   font-size: $mdm;
+// }
+
+// .post--body {
+//   padding: 1em;
+// }
+
+// .post__blog {
+//   position: relative;
+//   padding: 10px;
+//   padding-right: 65px;
+
+//   border-radius: $br;
+// 	background-color: $light;
+//   margin: 5px 1em;;  
+// }
+
+// .post__blog--title {
+//   font-size: $main;
+//   font-family: $ff-extr;
+//   margin: 0;
+//   // text-align: center;
+//   font-weight: 700;
+//   color: $black;
+// }
+
+// .post__blog--title--link {
+//   text-decoration: none;
+
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// }
+
+// .post__blog__edit {
+//   position: absolute;
+//   top: 0;
+//   right:0;
+//   bottom: 0;
+//   width: 60px;
+
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   border-radius: 0 $br $br 0;
+// }

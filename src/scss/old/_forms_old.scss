@@ -1,0 +1,53 @@
+.form__post {
+	min-height: 350px;
+  padding: 1em;
+}
+
+.form__post--title {
+  margin: 0;
+}
+
+.form__post--set {
+	margin: 1em 0;
+}
+.form__post--body--toolbar {
+  margin: 1em 0;
+}
+.form__post--body {
+  width: 100%;
+  min-height: 300px;
+  max-height: 600px;
+  background-color: $white;
+  padding: 1em;
+  // border-radius: $br;
+  overflow-y:  scroll;
+  border: 1.5px solid $grey;
+  border-top: 0;
+}
+
+// needs a more reusable and descriptive class name
+.img--primary {
+  margin: 1em 0;
+  max-width: 100%;
+}
+
+.body--expand {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  max-width:960px;
+  margin: 0 auto;
+  & section {
+    height: 100%;
+  }
+}
+
+ .form--contact {
+   width: 100%;
+   @include bp($bp-tab-mid) {
+     width: 60%;
+   }
+ }

@@ -1,0 +1,72 @@
+// A panel grid is a containers that
+// governs the layout of multiple panels 
+// in a row
+
+.panel__grid {
+	@include bp($bp-tiny) {
+		display: flex; 
+		flex-flow: row wrap;
+		justify-content: center;
+	}	
+	@include bp($bp-lrg) {
+		justify-content: flex-start;
+	}
+}
+
+// Panel Description
+//
+// Panel wrapper - can be any element but most comonly should use anchors, figures, or divs
+// - Panel image wrapper
+// -- panel image
+// - Panel caption(text)
+// -- Any kind of text
+
+.panel {
+	@each $type in $panel-types {
+		&--#{$type} {
+			@include panel($type);
+		}
+	}
+}
+.panel__img--wrap {
+	min-width: 125px; 
+	max-width: 125px;
+	max-height: 125px;
+	overflow: hidden;
+	@include bp ($bp-tiny) {
+		min-width: 100%;
+		max-width: 100%;
+		max-height: 130px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+.panel__img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+.panel__tag {display: none;}
+.panel__caption {
+	padding-left: 1em;
+	@include bp($bp-tiny) {
+		padding: 1em .5em;
+	}
+}
+.panel__title {
+	font-family: $main-font;
+	font-size: $main;
+	font-weight: 500;
+	margin-top: 0;
+	margin-bottom: .5em;
+}
+.panel__author {
+	font-family: $main-font;
+	font-size: $sml;
+	margin-top: 0;
+}
+.panel__rating {
+	margin-bottom: .5em;
+	display: block;
+}

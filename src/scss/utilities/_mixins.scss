@@ -1,0 +1,223 @@
+// Media Query Breakpoints
+
+// Generic custom breakpoint mixin
+// 
+// Makes life really easy but it does spam
+// media queries in the library which adds to
+// dozens if not hundreds of lines of repeated code
+
+@mixin bp($bp) {
+	@media only screen and (min-width: $bp) {
+		@content;
+	}
+}
+
+
+// Specific breakpoint mixins
+//
+// Shorthand for the above mixin
+// does not solve the problem of spamming 
+// media queries
+
+@mixin bp-tiny ($minOrMax: "min") {
+	@media screen and (#{$minOrMax}-width: $bp-tiny) {
+		@content;
+	}
+}
+
+@mixin bp-sml ($minOrMax: "min") {
+	@media screen and (#{$minOrMax}-width: $bp-sml) {
+		@content;
+	}
+}
+
+@mixin bp-mdm ($minOrMax: "min") {
+	@media screen and (#{$minOrMax}-width: $bp-mdm) {
+		@content;
+	}
+}
+
+@mixin bp-lrg ($minOrMax: "min") {
+	@media screen and (#{$minOrMax}-width: $bp-lrg) {
+		@content;
+	}
+}
+
+// transitions
+//
+// Customizable transition mixin
+// by specifying the effect of the transition
+// it may improve performace in css
+// the preformance improvement may not make 
+// a difference though
+
+@mixin transition($effect: all, $time: 300ms, $easing: ease-in-out) {
+	transition: $effect $time $easing;
+}
+
+// background colors
+// set the background and hover colors of an element 
+// in one mixin
+@mixin background($color, $hover: "null") {
+	
+	background-color: $color;
+	
+	@if $hover != "null" {
+		
+		@include transition(background-color);
+		
+		&:hover {
+			background-color: $hover;
+		}
+	}
+}
+
+// Flex mixins
+//
+// Works for most situations for using flexbox
+
+@mixin flex ($orientation: row, 
+			 $wrap: nowrap,
+			 $justify: space-around, 
+			 $align: flex-start) {
+	display: flex;
+	flex-flow: $orientation $wrap;
+	justify-content: $justify;
+	align-items: $align;
+}
+
+
+
+// Css Grid Mixins
+//
+// Standard grid mixins used in all of css-pattern
+// grid classes
+
+@mixin grid($type: "grid", 
+			$limit: $limited-grid-size, 
+			$pad: $padded-grid-padding) {
+    display: grid;
+    grid-template-columns: repeat($columns, 1fr);
+	grid-auto-rows: minmax(50px, auto);
+    margin: 0 auto;
+    @if $type == "grid--padded" {
+        grid-gap: $pad;
+    } @else if $type == "grid--limited" {
+        max-width: $limit;
+    } @else if $type == "grid--limited-padded" {
+        grid-gap: $pad;
+        max-width: $limit;
+    } @else if $type == "grid--nested" {
+		margin: 0;
+	} @else if $type == "grid--nested--padded" {
+		grid-gap: $pad;
+		margin: 0;
+	}
+}
+
+// Extend css-patterns grid 
+
+// Use this mixin to create your own custom
+// grid classes
+// *Grid columns will always have equal widths 
+// filling the space given to them
+
+@mixin custom-grid($type: "grid", 
+				   $columns: 12, 
+				   $limit: $limited-grid-size, 
+				   $pad: $padded-grid-padding) {
+	display: grid;
+	grid-template-columns: repeat($columns, 1fr);
+	grid-auto-rows: minmax(50px, auto);
+	margin: 0 auto;
+	@if $type == "grid--padded" {
+		grid-gap: $pad;
+	} @else if $type == "grid--limited" {
+		max-width: $limit;
+	} @else if $type == "grid--limited-padded" {
+		grid-gap: $pad;
+		max-width: $limit;
+	}	
+}
+
+
+
+// Image mixins and extend templates
+// 
+// Since we have mixins that don't require
+// any perameters it may be more preformant
+// to user '@extend' instead on '@include'
+// for these one off mixins. Compiled css
+// may be lessened significantly if '@extend'
+// is used on classes requiring the styles
+
+// '@extend' templates
+
+%img {
+	vertical-align: center;
+	border: 0;
+}
+
+%img--responsive {
+	max-width: 100%;
+	@extend %img;
+}
+
+// Image mixins
+
+@mixin img() {
+	vertical-align: center;
+	border: 0;
+}
+
+@mixin img--responsive($max-width: 100%) {
+	max-width: $max-width;
+	@include img;
+}
+
+
+
+// Panel Mixins
+
+@mixin panel($type) {
+	@if $type == "basic" {
+		display: flex;
+		flex-flow: column nowrap;
+		margin: 1em auto;
+		text-decoration: none;
+		color: #000;
+		width: 230px;
+		height: 300px;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 3px rgba(0,0,0,0.15);
+		padding: 0;
+		@include bp-tiny() {
+			margin: 1em .5em;
+		}
+
+		& > .panel--img--wrap {
+			min-width: 100%;
+			max-width: 100%;
+			max-height: 130px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
+		}
+	} @else if $type == "responsive" {
+		display: flex;
+		border-bottom: 2px solid rgba(0,0,0,.5);
+		padding-bottom: .5em;
+		margin: 1em .5em;
+		height: auto;
+		text-decoration: none;
+		color: #000;
+		@include bp ($bp-tiny) {
+			width: 230px;
+			height: 300px;
+			display: block;
+			border-bottom: none;
+			box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 3px rgba(0,0,0,0.15);
+			padding: 0;
+		}
+	}
+}

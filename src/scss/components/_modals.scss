@@ -1,0 +1,86 @@
+$modal-types: 'basic', 'backdrop';
+$modal-sizes: (
+    'sml': 300px,
+    'mdm': 600px,
+    'lrg': 900px, 
+);
+
+@mixin modal( $type: 'basic', $size: 'sml') {
+    width: $size;
+    position: absolute;
+}
+
+.modal__container {
+    z-index: $z-5;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: rgba(0,0,0,.65);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1em;
+}
+
+.modal {
+	min-width: 300px;
+	width: 70vw;
+	max-width: 1000px;
+	background-color: white;
+	border-radius: 4px;
+}
+
+.modal__body {
+	padding: 1em;
+}
+
+.modal__header {
+	padding: 1em;
+	border-bottom: .5px solid #ccc;
+	font-size: 20px;
+}
+.modal__footer {
+	padding: 1em;
+	border-top: .5px solid #ccc;
+}
+
+.img {
+	width: 100%;
+	max-width: 350px;
+	vertical-align: middle;
+	margin: 0 auto;
+	display: block;
+}
+
+.modal__text {
+	margin-top: 1.8em;
+}
+.modal__text__heading {
+	font-size: 20px;
+	margin-bottom: .8em;
+}
+.modal__text__body {
+	p {
+		margin-bottom: 1em;
+	}
+}
+
+@media screen and (min-width: 40em) {
+	.modal__body {
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-start;
+	}
+	
+	.img {
+		max-width: 45%;
+		margin: 0;
+	}
+	
+	.modal__text {
+		margin-top: 0;
+		margin-left: 2em;
+	}
+}

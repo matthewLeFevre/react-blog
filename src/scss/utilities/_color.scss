@@ -1,0 +1,25 @@
+// Premade classes for color
+//
+// It is best to assign color to an elements
+// main class instead of adding a large amount
+// of classes to the html element code
+// these classes can help you prototype look
+// and feel fast. To add your own style guide
+// colors to these classes add them to the 
+// _variables.scss partial under the 
+// colors list
+
+@each $color, $value in $colors {
+
+	// Background Color
+
+	.bg-#{$color} {
+		@include background($value);
+	}
+
+	// Text color
+
+	.txt-#{$color} {
+		color: $value;
+	}
+}

@@ -1,0 +1,13 @@
+// font size class generation
+//
+// As always it is best to assign the 
+// size of your text in the elements
+// main class but if you need to quickly
+// prototype then having classes
+// for text size may come in handy
+
+@each $size, $value in $sizes {
+	.#{$size} {
+		font-size: $value ;
+	}
+}

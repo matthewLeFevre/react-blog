@@ -1,0 +1,105 @@
+// .toolbar__post {
+//   text-align: center;
+//   display: flex;
+//   flex-flow: row wrap;
+// }
+
+// .toolbar__post--tool {
+//   background-color: $black;
+//   color: $white;
+//   padding: 10px 1em;
+//   text-decoration: none;
+//   border: 2px solid $black;
+//   margin: 0;
+//   font-size: $tiny;
+//   font-weight: 700;
+//   flex-grow: 1;
+//   cursor: pointer; 
+//   @include effect;
+
+//   &:first-child {
+//     border-radius: $br 0 0 0;
+//   }
+//   &:last-child {
+//     border-radius: 0 $br 0 0;
+//   }
+
+//   &:only-child {
+//     border-radius: $br;
+//   }
+
+//   &:hover {
+//     background-color: $white;
+//     color: $black;
+//   }
+  
+//   &.active {
+//     background-color: $white;
+//     color: $black;
+//   }
+// }
+
+// .toolbar__admin {
+//   text-align: center;
+//   padding: 2em 0;
+// }
+
+// .toolbar__admin--tool {
+//   background-color: $black;
+//   color: $white;
+//   padding: 10px 1em;
+//   text-decoration: none;
+//   border: 2px solid $black;
+//   margin: 0;
+//   font-size: $tiny;
+//   font-weight: 700;
+//   cursor: pointer; 
+//   @include effect;
+
+//   &:first-child {
+//     border-radius: $br 0 0 $br;
+//   }
+//   &:last-child {
+//     border-radius: 0 $br $br 0;
+//   }
+
+//   &:only-child {
+//     border-radius: $br;
+//   }
+
+//   &:hover {
+//     background-color: $white;
+//     color: $black;
+//   }
+  
+//   &.active {
+//     background-color: $white;
+//     color: $black;
+//   }
+// }
+
+// Dashboard toolbar
+
+.dashboard__toolbar {
+  @include flex(row, nowrap, space-around, center);
+  @include bp-tiny {
+    @include flex(row, nowrap, flex-start, center);
+  }
+  padding: .5em;
+}
+
+// I need to add some hover effect to these links
+// so that they are clicked on when selected
+// Also consider adding icons next to them
+// on the larger viewport
+
+.dashboard__toolbar__link  {
+  color: $black;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+    @include bp-tiny {
+      margin: 0 1em;
+    }
+}

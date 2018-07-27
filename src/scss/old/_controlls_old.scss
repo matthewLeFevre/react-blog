@@ -1,0 +1,132 @@
+@mixin ipt () {
+	font-family: sans-serif;
+	font-weight: 500;
+	font-size: $main;
+	border: none;
+	transition: all 300ms ease-in-out;
+	vertical-align: middle;
+	
+	&:hover {
+		
+	}
+	
+	&.invalid {
+		border-color: $error;
+	}
+
+	&.txt {
+		border: solid $grey 1.5px;
+	}
+}
+.ipt.txt {
+	@include ipt;
+	padding: .35em;
+}
+
+.ipt--full {
+	@include ipt;
+	padding: .35em;
+	width: 100%;
+}
+
+@mixin btn() {
+	background-color: $basic;
+	border: 2px solid $basic;
+	border-radius: $br;
+	
+	font: 700 16px sans-serif;
+	color: #fff;
+	text-decoration: none;
+	
+	cursor: pointer;
+	transition: all 250ms ease-in-out;
+
+		@each $alert, $value in $alerts {
+			$thisValue: $value;
+			&.#{$alert} {
+				background-color: $thisValue;
+				border-color: $thisValue;
+				color: $white;
+
+				&.outline {
+					background-color: transparent;
+					color: $thisValue;
+					&:hover {
+						background-color: $thisValue;
+						color: white;
+					}
+				}
+			}
+		}
+	
+	&.outline {
+		background-color: transparent;
+		color: $basic;
+		&:hover {
+			background-color: $basic;
+			color: #fff;
+		}
+	}
+	
+	&.tiny { font-size: $tiny;}
+	&.sml { font-size: $sml;}
+	&.main{ font-size: $main;}
+	&.mid{ font-size: $mid;}
+	&.mdm{ font-size: $mdm;}
+	&.mod { font-size: $mod;}
+	&.lrg { font-size: $lrg;}
+}
+
+.btn {
+	@include btn;
+	padding: .5em 1.75em;
+}
+
+.btn--icon {
+	@include btn;
+	padding: 8.5px;
+}
+
+.btn--long {
+	@include btn;
+	padding: .5em 3em;
+}
+
+.btn--full {
+	@include btn;
+	padding: .5em 1.75em;
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+.ipt {
+	&.toggler {
+		visibility: hidden;
+		position: absolute;
+	}
+	&.toggler:checked + .toggle {
+			color: $basic;
+			background-color: transparent;
+	}
+	&.toggler:checked + .toggle.success {
+		color: $success;
+		background-color: transparent;
+	}
+	&.toggler:checked + .toggle.error {
+		color: $error;
+		background-color: transparent;
+	}
+}
+
+.lbl {
+	font-size: $main;
+	font-weight: 700;
+	display: block;
+	padding: 0 0 .5em 0;
+}
+
+.form__field {
+	padding: .5em 0;
+}
+

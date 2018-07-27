@@ -1,0 +1,45 @@
+// Default styles
+* {
+  box-sizing: border-box;
+}
+
+body  {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $ff-hed;
+}
+
+span,
+input,
+label,
+textarea  {
+  font-family: $ff-extr;
+}
+
+p,
+button,
+a {
+  font-family: $ff-main;
+}
+
+
+h1 { font-size: $lrg;}
+h2 { font-size: $lrg;}
+h3 { font-size: $mod;}
+h4 { font-size: $mdm;}
+h5 { font-size: $mid;}
+h6 { font-size: $main;}
+
+p {font-size: $mdm;}
+
+img {
+  max-width: 600px;
+}

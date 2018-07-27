@@ -1,0 +1,37 @@
+@mixin alert($type: "") {
+    position: fixed;
+    width: 100%;
+    padding: 1em;
+    top: 0;
+    z-index: $z-5;
+
+    .close {
+        display: none;
+        cursor:pointer;
+        color: $theme-grey;
+        @include transition;
+        &:hover {
+            color: $black;
+        }
+    }
+    @if $type == 'closeable' {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .close {
+            display: block;
+        }
+    }
+
+    &.hide {
+        display: none;
+    }
+}
+
+.alert {
+    @include alert;
+}
+
+.alert--closeable {
+    @include alert('closeable');
+}

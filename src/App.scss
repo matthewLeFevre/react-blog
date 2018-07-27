@@ -1,0 +1,29 @@
+// Integrating css-patterns for a more uniform style sheet
+
+@import "scss/base/variables";
+@import "scss/base/reset";
+
+@import "scss/utilities/mixins";
+@import "scss/utilities/color";
+@import "scss/utilities/sizes";
+
+@import "scss/layout/grid";
+@import "scss/layout/nav";
+@import "scss/layout/header";
+@import "scss/layout/footer";
+
+@import "scss/components/forms";
+@import "scss/components/alerts";
+@import "scss/components/buttons";
+@import "scss/components/panels";
+@import "scss/components/cards";
+@import "scss/components/modals";
+@import "scss/components/code";
+@import "scss/components/menus";
+@import "scss/components/toolbars";
+@import "scss/components/posts";
+
+@import "scss/pages/_about";
+@import "scss/pages/_login";
+@import "scss/pages/_home";
+@import "scss/pages/_edit_post";

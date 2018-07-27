@@ -1,0 +1,144 @@
+// Css variables
+// :root {
+  // color scheme 1
+  // --cs1-1: #DC304b;
+  // --cs1-2: #F95F62;
+  // --cs1-3: #FFFFFF;
+  // --cs1-4: #1F2D3D;
+  // --cs1-5: #343F4B;
+  // color scheme 2
+  // --cs2-2: #FEFBD0;
+  // --cs2-3: #FDCFB7;
+  // --cs2-4: #F4828C;
+  // --cs2-5: #775D6A;
+  // color scheme 3
+  // --cs3-1: #1B2F47;
+  // --cs3-2: #B5A09E;
+  // --cs3-3: #E0BEBF;
+  // --cs3-4: #8DA9AB;
+  // --cs3-5: #476A94;
+// }
+
+// Scss Variables
+
+// color Scheme 
+
+  $red-opac:    rgba(220,48,75, .85);
+  $red:         #DC304b;
+  $orange:      #F95F62;
+  $white:       #FFFFFF;
+  $light:       #F0F0F1;
+  $grey:        #343F4B;
+  $black:       #1F2D3D;
+
+  $box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+  $blue: 				#084887;
+  $green: 			#56BF00;
+  $yellow: 			#FFCC42;
+  $error: 			#D33115;
+
+  $alerts: (
+	  "neutral":  $blue,
+	  "success": 	$green,
+	  "warning": 	$yellow,
+    "error":	 	$error,
+    "red":      $red,
+    "orange":   $orange,
+  );
+
+  $colors: (
+    "red":      $red,
+    "orange":   $orange,
+    "grey":     $grey,
+    "black":    $black,
+    "blue":     $blue,
+    "green":    $green,
+    "yellow":   $yellow,
+    "error-red":$error,
+    "red-opac": $red-opac,
+    "white":    $white,
+    "light":    $light
+  );
+
+
+  
+
+// Control Colors
+  
+  $success: $grey;
+  $basic:   $black;
+
+// z-index
+  $z-0: 0;
+  $z-05: 5;
+  $z-1: 10;
+  $z-2: 20;
+  $z-3: 30;
+  $z-4: 40;
+  $z-5: 50;
+
+  $z-indexes: (
+    "bottom":   $z-0,
+    "middle":   $z-05,
+    "top":      $z-1,
+    "very-top": $z-5,
+  );
+
+  // Genderally don't use
+  $z-btm: 0;
+  $z-mid: 150;
+  $z-top: 300;
+
+//breakpoints
+  $bp-tab-sml: 600px;
+  $bp-tab-mid: 800px;
+  $bp-tab-lrg: 1000px;
+  $bp-dsk-sml: 1200px;
+  $bp-dsk-mid: 1300px;
+  $bp-dsk-lrg: 1400px;
+
+  //Other Breakpoints
+  $bp-17: 900px;
+  $bp-24: 1250px;
+
+
+  // Fonts
+
+$alexBrush: 'Alex Brush', cursive;
+$openSans: 'Open Sans', sans-serif;
+$cardo: 'Cardo', serif;
+
+
+//Font-family         Sujested tags
+  $ff-main: $cardo;      // p, button, a
+  $ff-hed: $openSans;  // h1 - h6
+  $ff-extr: $openSans; // span, button, a, label, input
+
+//Font-sizes    Sujested tags
+  $x3lrg:   60px; // h1
+  $x2lrg:   50px; // h1, h2
+  $xlrg:    40px; // h1, h2, h3
+  $lrg:     35px; // h1, h2, h3
+  $mod:     30px; // h1, h2, h3, h4
+  $mdm:     25px; // h2, h3, h4, button, a, p
+  $mid:     20px; // h2, h3, h4, h5, p, button, a
+  $main:    18px; // h3, h4, h5, h6, p, span, button, a
+  $initial: 16px; // h3, h4, h5, h6, p, span, button, a
+  $sml:     15px; // p, span, button, a
+  $tiny:    12px; // p, span, button, a
+
+$sizes: (
+  "xlrg":     $xlrg,
+  "lrg":      $lrg,
+  "mod":      $mod,
+  "mdm":      $mdm,
+  "mid":      $mid,
+  "main":     $main,
+  "initial":  $initial,
+  "sml":      $sml,
+  "tiny":     $tiny,
+);
+  // Display 
+
+  $br: 4px;

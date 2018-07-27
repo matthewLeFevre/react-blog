@@ -1,0 +1,104 @@
+// button
+
+@mixin btn() {
+	margin: .1em 0;
+	text-decoration: none;
+	line-height: 1;
+	padding: .75em 1.75em;
+	width: auto;
+	background-color: $grey;
+	border: .1em solid $grey;
+	border-radius: $br;
+	font-weight: 700;
+	font-family: $main-font;
+	color: $white;
+	display: inline-block;
+	cursor: pointer;
+	@include transition(all, 200ms);
+	&.isLink {
+		margin: 0 .25em;
+	}
+
+	&:hover {
+		opacity: .7;
+	}
+
+	// More contrast on hover with default button colors
+	&.hoverable {
+		&:hover {
+			background-color: $white;
+			border-color: $grey;
+			color: $grey;
+		}
+	}
+
+	// Default button outline
+	&.outline {
+		background-color: $white;
+		border-color: $grey;
+		color: $grey;
+		
+		&.hoverable {
+			&:hover {
+				background-color: $grey;
+				color: $white;
+			}
+		}
+	}
+	
+	// Styles for each type of button
+	@each $type in $btn-types {
+		
+		&.#{$type} {
+			
+			@if $type == "full" {
+				width: 100%;
+				display: block;
+				margin: .25em 0;
+			} @else if $type == "icon" {
+				padding: .75em;
+			} @else if $type == "round" {
+				padding: .75em;
+				border-radius: 100%;
+			} @else if $type == "long" {
+				padding: .75em 5em;
+			}
+			
+		}
+
+	}
+	
+	// Styles for each color of button
+	@each $color, $value in $btn-colors {
+		&.#{$color} {
+			background-color: $value;
+			border-color: $value;
+			color: $white;
+			
+			&.hoverable {
+				&:hover {
+					background-color: $white;
+					color: $value;
+					border-color: $value;
+				}
+			}
+			
+			&.outline {
+				background-color: $white;
+				color: $value;
+				
+				&.hoverable {
+					&:hover {
+						background-color: $value;
+						color: $white;
+						border-color: $value;
+					}
+				}
+			}	
+		}
+	}	
+};
+
+.btn {
+	@include btn;
+}
