@@ -689,6 +689,20 @@ body {
   max-width: 500px;
   margin: 0 auto; }
 
+.form--mdm {
+  min-height: 50px;
+  min-width: 300px;
+  padding: 25px;
+  max-width: 800px;
+  margin: 0 auto; }
+
+.form--mdm--no-padding {
+  min-height: 50px;
+  min-width: 300px;
+  padding: 0;
+  max-width: 800px;
+  margin: 0 auto; }
+
 .form--lrg {
   min-height: 50px;
   min-width: 300px;
@@ -1312,6 +1326,7 @@ body {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  margin-bottom: 8em;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
 
 .blog__title {
@@ -1323,15 +1338,29 @@ body {
   padding: .5em;
   font-size: 1.9em; }
 
+.blog__summary {
+  border: 0;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 1em;
+  font-size: 1.125em;
+  resize: none;
+  height: 100px;
+  width: 100%;
+  font-family: "Cardo", serif;
+  display: block; }
+
+.blog__action-field {
+  border: 1px solid #ccc;
+  border-top: none; }
+
 .text-editor {
   width: 100%;
   min-height: 80vh;
   border: 1px solid #ccc;
   padding: 2em;
   font-size: 1.125em; }
-  @media screen and (min-width: 40em) {
-    .text-editor {
-      margin-bottom: 5em; } }
 
 .post-edit__toolbar {
   display: grid;
@@ -1355,7 +1384,7 @@ body {
 
 .post-edit-btn {
   position: relative;
-  color: black;
+  color: #1F2D3D;
   text-decoration: none;
   height: 100%;
   display: flex;
@@ -1364,7 +1393,7 @@ body {
   font-size: 20px;
   font-family: sans-serif;
   font-weight: 700;
-  border: .5px solid #bbb; }
+  border: 0.5px solid #bbb; }
   .post-edit-btn:after {
     content: '';
     position: absolute;

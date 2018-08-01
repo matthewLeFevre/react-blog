@@ -8,7 +8,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
+      userIsLoggedIn: false,
       email: '',
       password: '',
       alerts: [],
@@ -68,22 +68,17 @@ class Login extends React.Component {
         },
         body: JSON.stringify(data),
       };
-      this.setState({
-        password: ''
-      });
       fetch(url, myInit)
       .then(response => response.json())
       .then(data => {
-
         // alerts are still not functioning exactly as I would like
         if(data.status === "success") {
-          let joined = this.state.alerts;
-          joined.push(<Alert key={this.createRandomKey(6)} classes="alert--closeable bg-green txt-white" message={data.message} />);
-          this.setState({ 
-            alerts: joined,
-            loggedIn: true,
-          });
+          // let joined = this.state.alerts;
+          // joined.push(<Alert key={this.createRandomKey(6)} classes="alert--closeable bg-green txt-white" message={data.message} />);
           this.props.onLogin(data.data);
+          this.setState({ 
+            userIsLoggedIn: true,
+          });
         } else if(data.status === "failure") {
           let joined = this.state.alerts;
           joined.push(<Alert key={this.createRandomKey(6)} classes="alert--closeable bg-red txt-white" message={data.message} />); 
@@ -100,9 +95,9 @@ class Login extends React.Component {
   }
 
   render(){
-
-    if(this.state.loggedIn) {
-      return <Redirect to='/dashboard' />
+    if(this.state.userIsLoggedIn) {
+      
+     return <Redirect to="/dashboard/profile" />;
     }
     return (
       
@@ -118,7 +113,8 @@ class Login extends React.Component {
                 className="input--text full main" 
                 type="text" 
                 value={this.state.email}
-                onChange={this.handleInputChange}/>
+                onChange={this.handleInputChange}
+                autoComplete="on"/>
             </div>
             <div className="form__field">
               <label className="form__label mdm">Password</label>
@@ -127,7 +123,8 @@ class Login extends React.Component {
                 className="input--text full main" 
                 type="password" 
                 value={this.state.password}
-                onChange={this.handleInputChange}/>
+                onChange={this.handleInputChange}
+                autoComplete="on"/>
             </div>
             <fieldset className="form__field">
               <label className="form__label side">Stay LoggedIn</label>

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Route,
-  Switch,
-  Link, 
-  Redirect
-} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class Header extends React.Component {
   constructor(props) {

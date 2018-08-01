@@ -1,37 +1,115 @@
 import React from 'react';
-import DashboardToolbar from '../layout/Dashboard_toolbar_comp';
 import ImageSelect from '../reusable/Image_select_comp';
+import EditPostToolbar from '../layout/Edit_post_toolbar_comp';
+import Globals from '../../services/global_service';
+
+const Global = new Globals();
 
 class CreatePost extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      openImageSelect: true,
+      imageSelectIsOpen: false,
+      articleTitle: '',
+      artilceSummary: '',
+      articleBody: '',
+      articleStatus: '',
+      articleLink: '',
     }
 
+    this.articleBody = React.createRef();
+    this.handleData = this.handleData.bind(this);
+    this.savePost = this.savePost.bind(this);
+    this.publishPost = this.publishPost.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.toggleImageSelect = this.toggleImageSelect.bind(this);
   }
 
+  // Data entry events
+  handleData(event) {
+    if(event.target.name === "articleTitle") {
+      this.setState({articleTitle: event.target.value});
+    }else if(event.target.name === "articleSummary") {
+      this.setState({articleSummary: event.target.value});
+    }
+    this.setState({articleBody: this.articleBody.current.innerHTML}); 
+  }
+
+  savePost() {
+    let data = {
+      constroller: 'article',
+      action: 'createArticle',
+      payload: {
+        articleTitle: this.state.articleTitle,
+        articleSummary: this.state.artilceSummary,
+        articleBody: this.state.articleBody,
+        articleStatus: 'saved',
+        articleLink: 'unused',
+        userId: this.props.data.userId,
+        apiToken: this.props.data.apiToken
+      }
+    }
+
+    let req = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(data),
+    }
+
+    fetch(Global.url, req)
+    .then(response => response.json())
+    .then(data => console.log(data));
+  }
+
+  publishPost() {
+    let data = {
+      constroller: 'article',
+      action: 'createArticle',
+      payload: {
+        articleTitle: this.state.articleTitle,
+        articleSummary: this.state.artilceSummary,
+        articleBody: this.state.articleBody,
+        articleStatus: 'published',
+        articleLink: 'unused',
+        userId: this.props.userData.userId,
+        apiToken: this.props.userData.apiToken
+      }
+    }
+
+    let req = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(data),
+    }
+
+    fetch(Global.url, req)
+    .then(response => response.json())
+    .then(data => console.log(data));
+  }
+
+  // Manipulation Events
   toggleImageSelect() {
     this.setState(prevState =>({
-      openImageSelect: !prevState.openImageSelect,
+      imageSelectIsOpen: !prevState.imageSelectIsOpen,
     }));
   }
 
   handleEdit(action) {
-    // console.log(action);
     if( action === 'h2' ||
         action === 'h3' ||
         action === 'p') {
       document.execCommand('formatBlock', false, action);
-    }
-    if (action === 'image') {
+    } else if (action === 'image') {
       this.toggleImageSelect();
-    }
-    if (action === 'createlink') {
-      let url = prompt('Enter the link here: ', 'http:\/\/');
+    } else if (action === 'createlink') {
+      let url = prompt('Enter the link here: ', 'http://');
       document.execCommand(action, false, url);
     } else {
       document.execCommand(action, false, null);
@@ -41,19 +119,32 @@ class CreatePost extends React.Component {
   render() {
     return(
       <section className="column--12">
-      <DashboardToolbar />
-      <ImageSelect isOpen={this.state.openImageSelect} toggle={this.toggleImageSelect}/>
+      <ImageSelect isOpen={this.state.imageSelectIsOpen} toggle={this.toggleImageSelect}/>
       <EditPostToolbar action={this.handleEdit} />
-      <form className="document" action="">
+      <form className="document" action="" >
         <input 
-              name="blog-title" 
-              type="text" 
-              className="blog__title"
-              placeholder="Title..." />
+          name="articleTitle" 
+          type="text" 
+          className="blog__title"
+          placeholder="Title..." 
+          onChange={this.handleData}/>
+        <textarea 
+          name="articleSummary"
+          type="text" 
+          className="blog__summary" 
+          defaultValue="Summary..." 
+          onChange={this.handleData}/>
         <div 
-            className="text-editor" 
-            id="editor" 
-            contentEditable></div>
+          name="articleBody"
+          className="text-editor" 
+          id="editor" 
+          contentEditable 
+          ref={this.articleBody}
+          onInput={this.handleData}/>
+        <fieldset className="form__field blog__action-field">
+          <button type="button" onClick={this.savePost} className="btn primary isLink sml">Save</button>
+          <button type="button" onClick={this.publishPost} className="btn secondary isLink sml">Publish</button>
+        </fieldset>
       </form>
     </section>     
     );
@@ -62,115 +153,3 @@ class CreatePost extends React.Component {
 
 export default CreatePost;
 
-class EditPostToolbar extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      mobileClasses: "post-edit-btn mobile-closed",
-      mobileToggle: true,
-    }
-
-    this.action = this.action.bind(this);
-    this.toggleMobile = this.toggleMobile.bind(this);
-  }
-
-  action(e) {
-    // console.log(e.target);
-    let cmd = e.target.value;
-    this.props.action(cmd);
-  }
-
-  toggleMobile() {
-    if(this.state.mobileToggle) {
-      console.log(this.state.mobileToggle);
-      this.setState({
-        mobileClasses: "post-edit-btn mobile-closed mobile-open",
-        mobileToggle: false,
-      });
-    } else {
-      this.setState({
-        mobileClasses: "post-edit-btn mobile-closed",
-        mobileToggle: true,
-      });
-    }
-  }
-
-  render() {
-    return (<div className="post-edit__toolbar">
-        <button onClick={this.action}
-          value="justifyLeft"
-          className="post-edit-btn"> 
-          <i className=' fas fa-align-left'></i>
-        </button>
-        <button onClick={this.action}
-          value="justifyCenter"
-          className="post-edit-btn"> 
-          <i className=' fas fa-align-center'></i>
-        </button>
-        <button onClick={this.action} 
-          value="bold"
-          className="post-edit-btn"> 
-          <i className=' fas fa-bold'></i>
-        </button>
-        <button onClick={this.action}
-          value="italic"
-          className="post-edit-btn"> 
-          <i className=' fas fa-italic'></i>
-        </button>
-        <button onClick={this.action}
-          value="underline"
-          className="post-edit-btn"> 
-          <i className=' fas fa-underline'></i>
-        </button>
-        <button  
-          onClick={this.action}
-          value="image"
-          className="post-edit-btn"
-          id="getImage"> 
-          <i className=' fas fa-image'></i>
-        </button>
-        <button  
-          onClick={this.toggleMobile}
-          className="post-edit-btn" 
-          id="toggle-more"> 
-          <i className="fas fa-ellipsis-h"></i>
-        </button>
-        <button onClick={this.action}
-          value="insertOrderedList"
-          className={this.state.mobileClasses}>
-          <i className="fas fa-list-ol"></i>
-        </button>
-        <button onClick={this.action}
-          value="insertUnorderedList"
-          className={this.state.mobileClasses}>
-          <i className="fas fa-list-ul"></i>
-        </button>
-        <button onClick={this.action}
-          value="createlink"
-          className={this.state.mobileClasses}>
-          <i className="fas fa-link"></i>
-        </button>
-        <button onClick={this.action}
-          value="unlink"
-          className={this.state.mobileClasses}>
-          <i className="fas fa-unlink"></i>
-        </button>
-        <button onClick={this.action}
-          value="h2"
-          className={this.state.mobileClasses}>
-          H2
-        </button>
-        <button onClick={this.action}
-          value="h3"
-          className={this.state.mobileClasses}>
-          H3
-        </button>
-        <button onClick={this.action}
-          value="p"
-          className={this.state.mobileClasses}>
-          P
-        </button>
-      </div>);
-  }
-}

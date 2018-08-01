@@ -7,31 +7,38 @@ class DashboardToolbar extends React.Component {
       <div className="bg-theme-orange dashboard__toolbar column--4--sml column--6--tiny column--12">
         <Link 
             className="sml dashboard__toolbar__link" 
-            to={'/dashboard'}
+            to={'/dashboard/profile'}
             title="Dashboard"> 
-            Dashboard
-            {/* <i className="dashboard__toolbar__icon fas fa-columns"></i> */}
+            {/* Profile */}
+            <i className="dashboard__toolbar__icon fas fa-columns"></i>
           </Link>
           <Link
             className="sml dashboard__toolbar__link" 
             to={'/dashboard/messages'}
             title="Messages"> 
-            Messages
-            {/* <i className="dashboard__toolbar__icon far fa-envelope"></i> */}
+            {/* Messages */}
+            <i className="dashboard__toolbar__icon far fa-envelope"></i>
+          </Link>
+          <Link
+            className="sml dashboard__toolbar__link" 
+            to={'/dashboard/createAsset'}
+            title="Create an Asset"> 
+            {/* Create an Asset */}
+            <i className="fas fa-file-image"></i>
           </Link>
           <Link 
             className="sml dashboard__toolbar__link" 
-            to={'/dashboard/create'}
+            to={'/dashboard/createPost'}
             title="Create Blog Post"> 
-            Post
-            {/* <i className="dashboard__toolbar__icon fas fa-edit"></i> */}
+            {/* Create New Post */}
+            <i className="dashboard__toolbar__icon fas fa-edit"></i>
           </Link>
           <Link 
             className="sml dashboard__toolbar__link" 
             to={'/dashboard/settings'}
             title="Settings"> 
-            Settings
-          {/* <i className="dashboard__toolbar__icon fas fa-cog"></i> */}
+            {/* Settings */}
+          <i className="dashboard__toolbar__icon fas fa-cog"></i>
           </Link>
         </div>
     );

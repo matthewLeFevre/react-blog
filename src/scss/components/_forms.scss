@@ -21,6 +21,15 @@
 .form--sml {
     @include form('form--limited', 500px);
 }
+
+.form--mdm {
+    @include form('form--limited', 800px);
+}
+
+.form--mdm--no-padding {
+    @include form('form--limited', 800px, 0);
+}
+
 .form--lrg {
     @include form('form--limited', 1000px);
 }

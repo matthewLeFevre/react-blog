@@ -2,8 +2,6 @@ import React from 'react';
 import {
   Route,
   Switch,
-  Link, 
-  Redirect
 } from 'react-router-dom';
 
 import Header from './components/layout/Header_comp';
@@ -13,7 +11,7 @@ import Home from './components/views/Home_comp';
 import Login from './components/forms/Login_comp';
 import Register from './components/forms/Register_comp';
 import Dashboard from './components/views/Dashboard_auth_comp';
-import CreatePost from './components/views/Create_Post_auth_comp';
+import DashboardToolbar from './components/layout/Dashboard_toolbar_comp';
 
 
 // import './App.css';
@@ -24,55 +22,44 @@ class App extends React.Component {
     super(props);
     this.state = {
       userIsLoggedIn: false,
-      userData: {
-        userId: false,
-        userName: '',
-        userEmail: '',
-        userToken: '',
-      },
-      
     };
 
     this.onLogin = this.onLogin.bind(this);
   }
 
   onLogin(data) {
-    let getData = data;
     this.setState({
       userIsLoggedIn: true,
       userData: {
-        userId: getData.userId,
-        userStatus: getData.userStatus,
-        userName: getData.userName,
-        userEmail:getData.userEmail,
-        userToken: getData.apiToken,
+        userId: data.userId,
+        userStatus: data.userStatus,
+        userName: data.userName,
+        userEmail:data.userEmail,
+        apiToken: data.apiToken,
       },
     });
   }
 
-  render() {
-
+  render() {       
     return (
       <div className="App">
         <Header />
         <main className="grid">
+        {this.state.userIsLoggedIn ? <DashboardToolbar /> : ""}
           <Switch>
-            <Route exact path="/" component={Home} />
+          
+            <Route exact={true} path="/" component={Home} />
             <Route 
               path="/login" 
-              render={(props) => <Login onLogin={this.onLogin} />} />
+              render={(props) => <Login {...props} onLogin={this.onLogin} />} />
             <Route path="/register" component={Register} />
             <Route 
               path="/dashboard" 
-              render={(props) => <Dashboard data={this.state.userData}/> }/>
-              {/* Change this path back to being under dashboard */}
-              <Route 
-              path="/create"
-              exact 
-              render={(props) => <CreatePost /> }/>
+              render={(props) => <Dashboard {...props} userData={this.state.userData}/> }/>
           </Switch>
+          
         </main>
-        {/* <Footer auth={this.state.userIsLoggedIn}/> */}
+        <Footer auth={this.state.userIsLoggedIn}/>
       </div>
     );
   }

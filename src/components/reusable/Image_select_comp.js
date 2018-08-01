@@ -7,10 +7,8 @@ class ImageSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-      isOpen: "",
       images: "",
     } 
-    this.getImages();
   }
 
   componentWillReceiveProps() {
@@ -21,16 +19,18 @@ class ImageSelect extends React.Component {
   }
 
   // get the images belonging to the authenticated user
-  getImages() {
+  componentDidMount() {
     fetch(`${Global.url}?controller=asset&action=getAssetsByUserId&userId=1`)
     .then(response => response.json())
     .then(data => this.setState({images: data.data,}));
   }
 
+  
+
+
   render() {
 
-  if(this.state.isOpen) {
-    console.log(this.state.images);
+  if(this.props.isOpen) {
       return(
         <div className="modal__container">
           <div className="modal">
@@ -63,7 +63,7 @@ export default ImageSelect;
 const UserImage = (props) => {
   return (
     <div>{props.data.assetName}
-      <img className="img" src={props.data.assetPath}/>
+      <img className="img" alt={props.data.assetName} src={props.data.assetPath}/>
     </div>
   );
 };

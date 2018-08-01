@@ -28,14 +28,12 @@ class Register extends React.Component {
     this.setState({
       [name]: value
     });
-    console.log(this.state);
   }
 
   handleRegister(event) {
     event.preventDefault();
     if(this.state.userEmail == null || this.state.userPassword == null) {
       // throw an error and an alert
-      console.log('why');
       this.setState({
         password: ''
       });

@@ -34,17 +34,18 @@ class Footer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.auth) {
-      this.state.footer_sections[1] = [
-        {name: "Logout", link:"/logout"},
-        {name: "dashboard", link:"/dashboard"}
-      ];
-    } else {
-      this.state.footer_sections[1] = [
-        {name: "Login", link:"/login"},
-        {name: "register", link:"/register"}
-      ]
-    }
+    // terrible practice mutating state dont do this
+    // if(nextProps.auth) {
+    //   this.state.footer_sections[1] = [
+    //     {name: "Logout", link:"/logout"},
+    //     {name: "dashboard", link:"/dashboard/profile"}
+    //   ];
+    // } else {
+    //   this.state.footer_sections[1] = [
+    //     {name: "Login", link:"/login"},
+    //     {name: "register", link:"/register"}
+    //   ]
+    // }
   }
 
   render() {
@@ -66,7 +67,7 @@ class Footer extends React.Component {
 const FooterSection = props => {
   let links = [];
   for(let i = 0; i < props.data.length; i++) {
-    links.push(FooterLink(props.data[i]));
+    links.push(<FooterLink name={props.data[i].name} link={props.data[i].link} key={Global.createRandomKey(7)} />);
   }
   return (
     <section className="footer__section">
@@ -80,7 +81,7 @@ const FooterSection = props => {
 const FooterLink = props => {
   return (
     <li>
-      <Link to={props.link} key={Global.createRandomKey(7)} className="footer__link">
+      <Link to={props.link} className="footer__link">
         {props.name}
       </Link>
     </li>);
