@@ -13,6 +13,7 @@
 	font-family: $main-font;
 	color: $white;
 	display: inline-block;
+	text-align: center;
 	cursor: pointer;
 	@include transition(all, 200ms);
 	&.isLink {

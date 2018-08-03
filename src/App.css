@@ -12,73 +12,73 @@ body {
   line-height: 1.7; }
 
 .bg-grey {
-  background-color: #697479; }
+  background-color: #697479 !important; }
 
 .txt-grey {
   color: #697479; }
 
 .bg-blue {
-  background-color: #084887; }
+  background-color: #084887 !important; }
 
 .txt-blue {
   color: #084887; }
 
 .bg-green {
-  background-color: #56BF00; }
+  background-color: #56BF00 !important; }
 
 .txt-green {
   color: #56BF00; }
 
 .bg-yellow {
-  background-color: #FFCC42; }
+  background-color: #FFCC42 !important; }
 
 .txt-yellow {
   color: #FFCC42; }
 
 .bg-red {
-  background-color: #D33115; }
+  background-color: #D33115 !important; }
 
 .txt-red {
   color: #D33115; }
 
 .bg-purple {
-  background-color: #5F0F40; }
+  background-color: #5F0F40 !important; }
 
 .txt-purple {
   color: #5F0F40; }
 
 .bg-white {
-  background-color: #fff; }
+  background-color: #fff !important; }
 
 .txt-white {
   color: #fff; }
 
 .bg-theme-red {
-  background-color: #DC304b; }
+  background-color: #DC304b !important; }
 
 .txt-theme-red {
   color: #DC304b; }
 
 .bg-theme-orange {
-  background-color: #F95F62; }
+  background-color: #F95F62 !important; }
 
 .txt-theme-orange {
   color: #F95F62; }
 
 .bg-theme-light {
-  background-color: #F0F0F1; }
+  background-color: #F0F0F1 !important; }
 
 .txt-theme-light {
   color: #F0F0F1; }
 
 .bg-theme-grey {
-  background-color: #343F4B; }
+  background-color: #343F4B !important; }
 
 .txt-theme-grey {
   color: #343F4B; }
 
 .bg-theme-black {
-  background-color: #1F2D3D; }
+  background-color: #1F2D3D !important; }
 
 .txt-theme-black {
   color: #1F2D3D; }
@@ -860,6 +860,7 @@ body {
   font-family: "Open Sans", sans-serif;
   color: #fff;
   display: inline-block;
+  text-align: center;
   cursor: pointer;
   transition: all 200ms ease-in-out; }
   .btn.isLink {
@@ -1414,3 +1415,10 @@ body {
 @media screen and (min-width: 40em) {
   #toggle-more {
     display: none; } }
+
+.all-posts__container {
+  padding: 1em;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-flow: row wrap; }

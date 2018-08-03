@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Route,
   Switch,
+  Redirect
 } from 'react-router-dom';
 
 import Header from './components/layout/Header_comp';
@@ -11,10 +12,13 @@ import Home from './components/views/Home_comp';
 import Login from './components/forms/Login_comp';
 import Register from './components/forms/Register_comp';
 import Dashboard from './components/views/Dashboard_auth_comp';
+import Blog from './components/views/Blog_comp';
+import Post from './components/views/Post_comp';
 import DashboardToolbar from './components/layout/Dashboard_toolbar_comp';
 
+import Globals from './services/global_service';
 
-// import './App.css';
+const Global = new Globals();
 
 class App extends React.Component {
 
@@ -25,6 +29,13 @@ class App extends React.Component {
     };
 
     this.onLogin = this.onLogin.bind(this);
+  }
+
+  // May need to address this on the server
+  componentDidMount() {
+    fetch(`${Global.url}?controller=user&action=checkLogin`)
+    .then(response => response.json())
+    .then( data => data); // do something here
   }
 
   onLogin(data) {
@@ -47,15 +58,30 @@ class App extends React.Component {
         <main className="grid">
         {this.state.userIsLoggedIn ? <DashboardToolbar /> : ""}
           <Switch>
-          
-            <Route exact={true} path="/" component={Home} />
+            <Route 
+              exact={true} 
+              path="/" 
+              component={Home} />
+            <Route 
+              exact={true} 
+              path="/blog" 
+              component={Blog} />
+              <Route 
+              path="/blog/post/:id" 
+              render={(props) => <Post {...props} />} />
             <Route 
               path="/login" 
               render={(props) => <Login {...props} onLogin={this.onLogin} />} />
-            <Route path="/register" component={Register} />
+            <Route 
+              path="/register" 
+              component={Register} />
             <Route 
               path="/dashboard" 
-              render={(props) => <Dashboard {...props} userData={this.state.userData}/> }/>
+              render={(props) =>
+                this.state.userIsLoggedIn
+                ? <Dashboard {...props} userData={this.state.userData}/> 
+                : <Redirect to="/login" />
+              }/>
           </Switch>
           
         </main>

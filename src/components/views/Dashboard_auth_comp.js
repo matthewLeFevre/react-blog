@@ -8,6 +8,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      postId: null,
       selectedPost: null,
       userId: this.props.userData.userId,
       userStatus: this.props.userData.userStatus,
@@ -15,7 +16,6 @@ class Dashboard extends React.Component {
       userEmail:this.props.userData.userEmail,
       apiToken: this.props.userData.apiToken,
     }
-    console.log(this.props);
   }
 
   // componentWillReceiveProps() {
@@ -56,10 +56,9 @@ class Dashboard extends React.Component {
           <Route 
             path="/dashboard/createAsset"
             render={(props) => <CreateAsset {...props} userData={this.props.userData} /> }/>
-          {/* In order to edit posts we want to use our create post component */}
           <Route 
-            path="/dashboard/edit/:postTitle" 
-            render={(props) => <CreatePost {...props} userData={this.props.userData} postData={this.state.selectedPost} /> }/>
+            path="/dashboard/postEdit/:id" 
+            render={(props) => <CreatePost {...props} edit={true} userData={this.props.userData} /> }/>
         </Switch>
       </section>
     );

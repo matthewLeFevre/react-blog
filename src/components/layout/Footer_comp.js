@@ -9,8 +9,8 @@ class Footer extends React.Component {
     let authSection = [];
     if(this.props.auth) {
       authSection = [
-        {name: "Logout", link:"/"},
-        {name: "register", link:"/register"}
+        {name: "Logout", link:"/logout"},
+        {name: "Dashboard", link:"/cashboard/profile"}
       ];
     } else {
       authSection = [
@@ -34,18 +34,30 @@ class Footer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // terrible practice mutating state dont do this
-    // if(nextProps.auth) {
-    //   this.state.footer_sections[1] = [
-    //     {name: "Logout", link:"/logout"},
-    //     {name: "dashboard", link:"/dashboard/profile"}
-    //   ];
-    // } else {
-    //   this.state.footer_sections[1] = [
-    //     {name: "Login", link:"/login"},
-    //     {name: "register", link:"/register"}
-    //   ]
-    // }
+    let authSection = [];
+    if(this.props.auth) {
+      authSection = [
+        {name: "Logout", link:"/logout"},
+        {name: "Dashboard", link:"/cashboard/profile"}
+      ];
+    } else {
+      authSection = [
+        {name: "Login", link:"/login"},
+        {name: "register", link:"/register"}
+      ]
+    }
+
+    this.setState({
+      footerSection: [
+        [
+          {name: "Archive", link:"/archive"},
+          {name: "Blog", link:"/blog"},
+          {name: "About Me", link:"/about"},
+          {name: "Contact", link:"/contact"}
+        ],
+        authSection
+      ]
+    })
   }
 
   render() {

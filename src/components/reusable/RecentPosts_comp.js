@@ -20,7 +20,7 @@ class RecentPosts extends React.Component {
 
   render() {
     return (
-     <section className="recent-posts column--12 column--sml--6 column--mdm--12 column--lrg--4">
+     <section className="recent-posts column--12 column--sml--6 column--lrg--4">
        <h2 className="recent-post__heading">RecentPosts</h2>
        <div className="post__container">
         {this.state.posts ? this.state.posts.map((val, index, arr)=> {
@@ -42,7 +42,6 @@ const PostTN = (props) => {
       <div className="item-card__body">
         <img src={props.val.assetPath ? props.val.assetPath : "https://images.pexels.com/photos/101472/pexels-photo-101472.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"} alt={props.articleTitle + "image"} className="item-card__img" />
         <div className="item-card__text">
-        {/* Don't know why the article title is not showing up */}
           <h5 className="item-card__heading">{props.val.articleTitle}</h5>
           <p className="item-card__description">{props.val.articleSummary ? props.val.articleSummary : "Lorum ipsum dolor profundis Lorume ispsume dolor profunids"}</p>
         </div>

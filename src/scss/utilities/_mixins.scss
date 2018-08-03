@@ -60,7 +60,7 @@
 // in one mixin
 @mixin background($color, $hover: "null") {
 	
-	background-color: $color;
+	background-color: $color !important;
 	
 	@if $hover != "null" {
 		
