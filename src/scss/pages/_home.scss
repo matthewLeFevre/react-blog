@@ -26,3 +26,56 @@
     max-height: 100%;
   }
 }
+
+.home__img__container {
+    min-height: 270px;
+    max-height: 270px;
+    min-width: 270px;
+    max-width: 270px;
+    overflow: hidden;
+    @include flex(row, nowrap, center, center);
+    border-radius: 100%;
+}
+.home__img--welcome {
+    height: 270px;
+    display: block;
+}
+
+.home-intro {
+    margin: 1em auto;
+    padding:  0 1.5em;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 270px;
+    @include bp-tiny {
+        flex-flow: row nowrap;
+        width: auto;
+        // max-width: 700px;
+    }
+}
+
+.home-intro__text {
+    @include bp-tiny {
+        margin-left: 1.5em;
+    }
+}
+
+
+.recent-posts__grid {
+    padding: 1.5em;
+    @include bp-tiny {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1.5em;
+    }
+}
+
+.recent-posts__detail {
+    max-width: 100%;
+}
+
+.recent-post__img {
+    width: 100%;
+}

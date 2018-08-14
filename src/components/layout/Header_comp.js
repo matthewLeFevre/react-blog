@@ -1,17 +1,26 @@
+//================================
+// Imports
+//================================
+
+//React Library
 import React from 'react';
 import {Link} from 'react-router-dom';
+
+//================================
+// Header Class
+//================================
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state={navToggle: false};
+    this.state={navOpen: false};
     this.toggleNav = this.toggleNav.bind(this);
   }
 
   toggleNav() {
     this.setState(prevState => ({
-      navToggle: !prevState.navToggle
+      navOpen: !prevState.navOpen
     }));
     
   }
@@ -20,26 +29,27 @@ class Header extends React.Component {
     return (
       <header className="header bg-theme-red">
         <Navbtn toggleNav={this.toggleNav} />
-        <Navigation toggleNav={this.state.navToggle} closeToggle={this.toggleNav} />
+        <Navigation navOpen={this.state.navOpen} toggleNav={this.toggleNav} />
       </header>
     ); 
   }
 }
 
-const Navbtn = props => {
-  return (
-    <div onClick={props.toggleNav} className="nav__btn"> 
-      <span>Menu</span>
-      <div className="nav__btn__ico"></div> 
-    </div>
-  );
-}
+// Export Statement
+export default Header;
+
+//================================
+// Navigation Class
+//
+// - Should probably move this 
+// class into a new file
+//================================
 
 class Navigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggleNav: this.props.toggleNav,
+      navOpen: this.props.navOpen,
       classes: 'nav',
       nav__links: [
         {name: "Blog", title:"placeholder", link:"/blog"},
@@ -52,20 +62,18 @@ class Navigation extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
-    if(nextProps.toggleNav) {
+    if(nextProps.navOpen) {
       this.setState({
-        toggleNav: nextProps.toggleNav,
+        navOpen: nextProps.navOpen,
         classes: "nav open",
       });
     } else {
       this.setState({
-        toggleNav: nextProps.toggleNav,
+        navOpen: nextProps.navOpen,
         classes: "nav",
       });
     }
-    
-
+  
   }
 
   render() {
@@ -73,10 +81,23 @@ class Navigation extends React.Component {
     <nav className={this.state.classes}>
       <ul className="nav__list">
         {this.state.nav__links
-          .map( (link, index) => <NavLinks key={index} data={link} toggleNav={this.props.closeToggle}/>)}            
+          .map( (link, index) => <NavLinks key={index} data={link} toggleNav={this.props.toggleNav}/>)}            
       </ul>
     </nav>);
   }
+}
+
+//================================
+// Functional Components
+//================================
+
+const Navbtn = props => {
+  return (
+    <div onClick={props.toggleNav} className="nav__btn"> 
+      <span>Menu</span>
+      <div className="nav__btn__ico"></div> 
+    </div>
+  );
 }
 
 const NavLinks = props => {
@@ -86,5 +107,3 @@ const NavLinks = props => {
     </li>
   );
 }
-
-export default Header;

@@ -1,24 +1,25 @@
+//================================
+// Imports
+//================================
+
+//React Library
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+//Service Imports
 import Globals from '../../services/global_service';
+
+//Service Variables
 const Global = new Globals();
 
+//================================
+// Footer Class
+//================================
+
 class Footer extends React.Component {
+
   constructor(props) {
     super(props);
-    let authSection = [];
-    if(this.props.auth) {
-      authSection = [
-        {name: "Logout", link:"/logout"},
-        {name: "Dashboard", link:"/cashboard/profile"}
-      ];
-    } else {
-      authSection = [
-        {name: "Login", link:"/login"},
-        {name: "register", link:"/register"}
-      ]
-    }
-
     this.state = {
       authenticated: this.props.auth,
       footer_sections: [
@@ -28,36 +29,8 @@ class Footer extends React.Component {
           {name: "About Me", link:"/about"},
           {name: "Contact", link:"/contact"}
         ],
-        authSection
       ]
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    let authSection = [];
-    if(this.props.auth) {
-      authSection = [
-        {name: "Logout", link:"/logout"},
-        {name: "Dashboard", link:"/cashboard/profile"}
-      ];
-    } else {
-      authSection = [
-        {name: "Login", link:"/login"},
-        {name: "register", link:"/register"}
-      ]
-    }
-
-    this.setState({
-      footerSection: [
-        [
-          {name: "Archive", link:"/archive"},
-          {name: "Blog", link:"/blog"},
-          {name: "About Me", link:"/about"},
-          {name: "Contact", link:"/contact"}
-        ],
-        authSection
-      ]
-    })
   }
 
   render() {
@@ -75,6 +48,13 @@ class Footer extends React.Component {
     );
   }
 }
+
+// Export statement
+export default Footer;
+
+//================================
+// Functional Components
+//================================
 
 const FooterSection = props => {
   let links = [];
@@ -99,4 +79,3 @@ const FooterLink = props => {
     </li>);
 }
 
-export default Footer;

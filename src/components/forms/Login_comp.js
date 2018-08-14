@@ -1,27 +1,45 @@
+//================================
+// Imports
+//================================
+
+//React Library
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+
+//Reusable Component Imports
 import Alert from '../reusable/alert_comp';
-const url= 'http://site2/server.php';
+
+//Service Imports
+import Globals from '../../services/global_service';
+
+//Service Variables
+const Global = new Globals();
+
+//================================
+// Login Class
+//================================
 
 class Login extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      alert: '',
+      showAlert: false,
       userIsLoggedIn: false,
       email: '',
       password: '',
-      alerts: [],
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
   }
 
+  hideAlert() {
+    this.setState({showAlert: false,});
+  }
+ 
   handleInputChange(event) {
-    // I should probably look for a safer way to 
-    // store passwords so that they are not so easily 
-    // accessible in the js
     const target = event.target;
     const name = target.name;
     const value = target.value;
@@ -31,27 +49,13 @@ class Login extends React.Component {
     });
   }
 
-  createRandomKey(length) {
-    let id = "";
-    let possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < length; i++) {
-      id += possibleCharacters.charAt(Math.floor(Math.random() * possibleCharacters.length));
-    }
-
-    return id;
-  }
-
   handleLogin(event) {
-
     if(this.state.email === false || this.state.password === false) {
-      let joined = this.state.alerts;
-          joined.push(<Alert key={this.createRandomKey(6)} classes="alert--closeable bg-red txt-white" message="Please fill in both password and email fields." />);
       this.setState({
         password: '',
-        alerts: joined,
+        alert: <Alert hideAlert={this.hideAlert} classes="alert--closeable bg-red txt-white" message="Please fill in both password and email fields." />,
+        showAlert: true,
       });
-      
-      return;
     } else {
       const data = {
         controller: "user",
@@ -63,51 +67,42 @@ class Login extends React.Component {
       };
       const myInit = {
         method: 'POST',
-        headers: {
-          'content-Type': 'application/json'
-        },
+        headers: Global.header,
         body: JSON.stringify(data),
       };
-      fetch(url, myInit)
+      fetch(Global.url, myInit)
       .then(response => response.json())
       .then(data => {
-        // alerts are still not functioning exactly as I would like
         if(data.status === "success") {
-          // let joined = this.state.alerts;
-          // joined.push(<Alert key={this.createRandomKey(6)} classes="alert--closeable bg-green txt-white" message={data.message} />);
           this.props.onLogin(data.data);
           this.setState({ 
             userIsLoggedIn: true,
           });
-        } else if(data.status === "failure") {
-          let joined = this.state.alerts;
-          joined.push(<Alert key={this.createRandomKey(6)} classes="alert--closeable bg-red txt-white" message={data.message} />); 
-          this.setState({ alerts: joined,});
-
         } else {
-          let joined = this.state.alerts;
-          joined.push(<Alert key={this.createRandomKey(6)} classes="alert--closeable bg-yellow txt-white" message={data.message} />); 
-          this.setState({ alerts: joined,});
-        }
-
+          this.setState({ 
+            alert: <Alert hideAlert={this.hideAlert} classes="alert--closeable bg-red txt-white" message={data.message} />,
+            showAlert: true,
+          });
+        } 
       });
     }
   }
 
   render(){
     if(this.state.userIsLoggedIn) {
-      
-     return <Redirect to="/dashboard/profile" />;
+      return <Redirect to="/dashboard/profile" />;
     }
     return (
-      
       <div className="column--12">
-        {this.state.alerts[this.state.alerts.length - 1]}
+        {this.state.showAlert
+          ? this.state.alert
+          : ''
+        }
       <section className="login__container bg-theme-red ">
         <div className="login__form__container">
           <form className="form--sml">
             <div className="form__field">
-              <label className="form__label mdm">Email/User Name</label>
+              <label className="form__label mdm">Email</label>
               <input 
                 name="email" 
                 className="input--text full main" 
@@ -145,4 +140,6 @@ class Login extends React.Component {
     );
   };
 }
+
+//Export Statement
 export default Login;

@@ -1,0 +1,21 @@
+.img__drag-area {
+  border-radius: $br;
+  border: 2px $theme-red dashed;
+}
+.img__list {
+  
+}
+.img__list-item {
+  width: 150px;
+}
+
+.highlight {
+  border-color: $theme-grey;
+}
+
+.all-photos__wrapper {
+  padding: 1em;
+  @include bp-sml {
+    border-left: 2.5px dashed $theme-orange;
+  }
+}

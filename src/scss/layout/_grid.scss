@@ -35,6 +35,10 @@
     }
 }
 
+.grid--limited-padded--home {
+    @include grid("grid--limited-padded", 940px);
+}
+
 .grid--nested { @include grid("grid--nested");}
 
 .column {

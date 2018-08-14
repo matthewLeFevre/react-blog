@@ -1,42 +1,43 @@
-import React from 'react';
-import {
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom';
+//================================
+// Imports
+//================================
 
+//React Library
+import React from 'react';
+import {Route,Switch,Redirect} from 'react-router-dom';
+
+//Static layout component imports
 import Header from './components/layout/Header_comp';
 import Footer from './components/layout/Footer_comp';
-
-import Home from './components/views/Home_comp';
-import Login from './components/forms/Login_comp';
-import Register from './components/forms/Register_comp';
-import Dashboard from './components/views/Dashboard_auth_comp';
-import Blog from './components/views/Blog_comp';
-import Post from './components/views/Post_comp';
 import DashboardToolbar from './components/layout/Dashboard_toolbar_comp';
 
-import Globals from './services/global_service';
+//Whole view imports
+import Home from './components/views/Home_comp';
+import Blog from './components/views/Blog_comp';
+import Post from './components/views/Post_comp';
+import Dashboard from './components/views/Dashboard_auth_comp';
 
-const Global = new Globals();
+//Form component imports
+import Login from './components/forms/Login_comp';
+import Register from './components/forms/Register_comp';
+
+//================================
+// App Class
+//================================
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      userIsLoggedIn: false,
-    };
-
+    this.state = { userIsLoggedIn: false,};
     this.onLogin = this.onLogin.bind(this);
   }
 
-  // May need to address this on the server
-  componentDidMount() {
-    fetch(`${Global.url}?controller=user&action=checkLogin`)
-    .then(response => response.json())
-    .then( data => data); // do something here
-  }
+  // function checkLogin
+  // - Checks local storage for a JWT
+  // - If JWT is found send it to server
+  // - If the server determins it valid it will send user data
+  // - If userdata returned render views for loggedin user
 
   onLogin(data) {
     this.setState({

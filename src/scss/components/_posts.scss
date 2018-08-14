@@ -17,6 +17,18 @@
   padding: .4em 1em;
 }
 
+.all-posts__container {
+  @include flex(row, wrap, flex-start, flex-start);
+  padding: 1em 0;
+}
+
+.all-posts__wrapper {
+  padding: 1em;
+  @include bp-sml {
+    border-right: 2.5px dashed $theme-orange;
+  }
+}
+
 
 // .post--banner {
 //   max-height: 40vh; 

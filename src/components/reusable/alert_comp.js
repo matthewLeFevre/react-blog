@@ -9,19 +9,19 @@ class Alert extends React.Component {
 
     }
 
-    this.handleClose = this.handleClose.bind(this);
+    // this.handleClose = this.handleClose.bind(this);
   }
 
-  handleClose(event) {
-    this.setState( prevState => ({
-      classes: prevState.classes + " hide",
-    }));
-  }
+  // handleClose(event) {
+  //   this.setState( prevState => ({
+  //     classes: prevState.classes + " hide",
+  //   }));
+  // }
 
   render() {
     return (
       <div className={this.state.classes}
-        onClick={this.handleClose}
+        onClick={this.props.hideAlert}
       >
         {this.props.message}
         <i className="fas fa-times close"></i>

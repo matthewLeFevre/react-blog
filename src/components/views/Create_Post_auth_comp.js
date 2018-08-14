@@ -2,6 +2,7 @@ import React from 'react';
 import ImageSelect from '../reusable/Image_select_comp';
 import EditPostToolbar from '../layout/Edit_post_toolbar_comp';
 import Globals from '../../services/global_service';
+import Alert from '../reusable/alert_comp';
 
 const Global = new Globals();
 
@@ -10,6 +11,8 @@ class CreatePost extends React.Component {
     super(props);
 
     this.state = {
+      alert: '',
+      showAlert: false,
       edit: false,
       imageSelectIsOpen: false,
       articleTitle: '',
@@ -18,12 +21,19 @@ class CreatePost extends React.Component {
       articleStatus: '',
       articleLink: '',
     }
+
+    // Reference
     this.articleBody = React.createRef();
+
+    // Event Handlers
     this.handleData = this.handleData.bind(this);
     this.savePost = this.savePost.bind(this);
+    this.saveExistingPost = this.saveExistingPost.bind(this);
     this.publishPost = this.publishPost.bind(this);
+    this.publishExistingPost = this.publishExistingPost.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.toggleImageSelect = this.toggleImageSelect.bind(this);
+    this.hideAlert = this.hideAlert.bind(this);
   }
 
   componentDidMount () {
@@ -31,13 +41,14 @@ class CreatePost extends React.Component {
       fetch(`${Global.url}?controller=article&action=getArticleById&articleId=${this.props.match.params.id}"`)
       .then(response => response.json())
       .then( (data) => {
-        console.log(data);
+        // console.log(data);
         this.setState({
           edit: this.props.edit,
           articleTitle: data.data[0].articleTitle,
           articleSummary: data.data[0].articleSummary,
           articleBody: data.data[0].articleBody,
           articleLink: data.data[0].articleLink,
+          articleId: data.data[0].articleId,
         }, ()=> this.articleBody.current.innerHTML = this.htmlDecode(this.state.articleBody));
       });
     }
@@ -45,6 +56,7 @@ class CreatePost extends React.Component {
 
   // Data entry events
   handleData(event) {
+    // console.log("changed");
     if(event.target.name === "articleTitle") {
       this.setState({articleTitle: event.target.value});
     }else if(event.target.name === "articleSummary") {
@@ -67,7 +79,6 @@ class CreatePost extends React.Component {
         apiToken: this.props.userData.apiToken
       }
     }
-
     let req = {
       method: 'POST',
       headers: {
@@ -79,7 +90,23 @@ class CreatePost extends React.Component {
 
     fetch(Global.url, req)
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => {
+      if(data.status === 'success') {
+        this.setState({
+          alert: <Alert hideAlert={this.hideAlert} classes="alert--closeable bg-green txt-white" message={data.message} />,
+          showAlert: true,
+          articleTitle: '',
+          articleSummary: '',
+          articleBody: '',
+          articleStatus: '',
+          articleLink: '',
+        });
+      }
+    });
+  }
+
+  hideAlert() {
+    this.setState({showAlert: false,});
   }
 
   publishPost() {
@@ -111,7 +138,36 @@ class CreatePost extends React.Component {
     .then(data => console.log(data));
   }
 
-  saveExistingPost(){}
+  saveExistingPost(){
+    let date = new Date();
+    let data = {
+      controller: 'article',
+      action: 'updateArticle',
+      payload: {
+        articleTitle: this.state.articleTitle,
+        articleSummary: this.state.articleSummary,
+        articleBody: this.state.articleBody,
+        articleStatus: 'saved',
+        articleLink: 'unused',
+        articleModified: date.toDateString(),
+        articleId: this.state.articleId,
+        userId: this.props.userData.userId,
+        apiToken: this.props.userData.apiToken
+      }
+    }
+    let req = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(data),
+    }
+    fetch(Global.url, req)
+    .then(response => response.json())
+    .then(data => console.log(data));
+  }
+
   publishExistingPost(){}
 
   // Manipulation Events
@@ -146,6 +202,10 @@ class CreatePost extends React.Component {
 
     return(
       <section className="column--12">
+      {this.state.showAlert
+        ? this.state.alert
+        : ''
+      }
       <ImageSelect isOpen={this.state.imageSelectIsOpen} toggle={this.toggleImageSelect}/>
       <EditPostToolbar action={this.handleEdit} />
       <form className="document" action="" >
@@ -155,13 +215,13 @@ class CreatePost extends React.Component {
           className="blog__title"
           placeholder="Title..." 
           onChange={this.handleData}
-          value={this.state.edit ? this.state.articleTitle : ''}/>
+          value={this.state.articleTitle}/>
         <textarea 
           name="articleSummary"
           type="text" 
           className="blog__summary" 
           onChange={this.handleData}
-          value={this.state.edit ? this.state.articleSummary : ''}
+          value={this.state.articleSummary}
           />
         <div 
           name="articleBody"

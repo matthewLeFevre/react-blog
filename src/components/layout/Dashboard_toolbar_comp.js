@@ -1,5 +1,14 @@
+//================================
+// Imports
+//================================
+
+//React Library
 import React from 'react';
 import {Link} from 'react-router-dom';
+
+//================================
+// DashboardToolbar Class
+//================================
 
 class DashboardToolbar extends React.Component { 
   render() {
@@ -9,35 +18,30 @@ class DashboardToolbar extends React.Component {
             className="sml dashboard__toolbar__link" 
             to={'/dashboard/profile'}
             title="Dashboard"> 
-            {/* Profile */}
             <i className="dashboard__toolbar__icon fas fa-columns"></i>
           </Link>
           <Link
             className="sml dashboard__toolbar__link" 
             to={'/dashboard/messages'}
             title="Messages"> 
-            {/* Messages */}
             <i className="dashboard__toolbar__icon far fa-envelope"></i>
           </Link>
           <Link
             className="sml dashboard__toolbar__link" 
             to={'/dashboard/createAsset'}
             title="Create an Asset"> 
-            {/* Create an Asset */}
             <i className="fas fa-file-image"></i>
           </Link>
           <Link 
             className="sml dashboard__toolbar__link" 
             to={'/dashboard/createPost'}
             title="Create Blog Post"> 
-            {/* Create New Post */}
             <i className="dashboard__toolbar__icon fas fa-edit"></i>
           </Link>
           <Link 
             className="sml dashboard__toolbar__link" 
             to={'/dashboard/settings'}
             title="Settings"> 
-            {/* Settings */}
           <i className="dashboard__toolbar__icon fas fa-cog"></i>
           </Link>
         </div>
@@ -45,4 +49,5 @@ class DashboardToolbar extends React.Component {
   }
 }
 
+//Export Statement
 export default DashboardToolbar;

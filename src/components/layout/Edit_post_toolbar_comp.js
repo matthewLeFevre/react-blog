@@ -1,14 +1,22 @@
+//================================
+// Imports
+//================================
+
+//React Library
 import React from 'react';
 
+//================================
+// EditPostToolbar Class
+//================================
+
 class EditPostToolbar extends React.Component {
+
   constructor(props) {
     super(props);
-
     this.state = {
       mobileClasses: "post-edit-btn mobile-closed",
       mobileToggle: true,
     }
-
     this.handleEdit = this.handleEdit.bind(this);
     this.toggleMobile = this.toggleMobile.bind(this);
   }
@@ -108,4 +116,5 @@ class EditPostToolbar extends React.Component {
   }
 }
 
+// Export statement
 export default EditPostToolbar;

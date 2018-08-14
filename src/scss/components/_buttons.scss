@@ -19,6 +19,9 @@
 	&.isLink {
 		margin: 0 .25em;
 	}
+	&.breath {
+		margin: .25em;
+	}
 
 	&:hover {
 		opacity: .7;
@@ -102,4 +105,11 @@
 
 .btn {
 	@include btn;
+}
+
+.force-btn {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
 }

@@ -1,5 +1,8 @@
 import React from 'react';
 import banner_image from '../../images/banner_image.jpg';
+import Globals from '../../services/global_service';
+
+const Global = new Globals();
 
 
 
@@ -17,13 +20,83 @@ class Home extends React.Component {
 
   render() {
     return ( 
-      <section className="column--12 nested--grid">
-        <div className="column--12 banner">
-          <img src={banner_image} className="column--12 banner__img" alt="family pic"/>
+      <section className="column--12">
+        <div className="grid--limited-padded--home">
+          <div className="home__container column--12">
+            <HomeIntro />
+            <HomeRecentPosts />
+          </div>
         </div>
       </section>
     )
   }
+}
+
+const HomeIntro = () => {
+  return(
+    <figure className="home-intro">
+      <div className="home__img__container">
+        <img className="home__img--welcome" src={banner_image} />
+      </div>
+      <figcaption className="home-intro__text">
+        <h1 className="home-intro__heading">Courtney LeFevre</h1>
+        <p className="home-intro__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div>
+          <a className="btn icon action breath sml"><i className="fab fa-facebook-f"></i></a>
+          <a className="btn icon action breath sml"><i className="fab fa-instagram"></i></a>
+          <a className="btn icon action breath sml"><i className="fab fa-blogger"></i></a>
+          <a className="btn icon action breath sml"><i className="fas fa-envelope"></i></a>
+        </div>
+      </figcaption>
+    </figure>
+  );
+}
+
+class HomeRecentPosts extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state= {
+      posts: [],
+    }
+  }
+  componentDidMount() {
+    fetch(`${Global.url}?controller=article&action=getNumberOfArticles&articleNumber=6`)
+    .then(response => response.json())
+    .then( (posts) => {
+      this.setState({
+        posts: posts.data
+      });
+    })
+  }
+  render () {
+    return(
+      <div className="recent-posts__grid">
+        {this.state.posts
+          ? this.state.posts
+            .map( post => {
+              return <PostDetail post={post} key={Global.createRandomKey(7)} />
+            })
+          : ''
+        }
+      </div>
+    );
+  }
+}
+
+const PostDetail = props => {
+  let date = new Date(props.post.articleCreated);
+  return (
+    <div className="recent-post__detail">
+      <h3>{props.post.articleTitle}</h3>
+      <span>{date.toDateString()}</span>
+      <img className="recent-post__img" src={
+        props.post.assetPath
+        ?  props.post.assetPath
+        : "https://images.pexels.com/photos/386148/pexels-photo-386148.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+      } />
+      <p>{props.post.articleSummary}</p>
+    </div>
+  );
 }
 
 // const PostDisplay = props => {
