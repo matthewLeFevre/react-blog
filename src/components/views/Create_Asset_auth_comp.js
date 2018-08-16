@@ -47,7 +47,6 @@ class CreateAsset extends React.Component {
     fileData.append('userId', this.props.userData.userId);
     fileData.append('assetStatus', 'saved');
     fileData.append('apiToken', this.props.userData.apiToken);
-    // fileData.append('apiToken', 'myRandomToken');
     fileData.append('fileUpload', file);
     const req = {
       method: 'POST',
@@ -55,7 +54,13 @@ class CreateAsset extends React.Component {
     };
     fetch(Global.url, req)
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => {
+      if(data.status === 'success') {
+        this.props.handleAlert(data.message, 'success');
+      } else {
+        this.props.handleAlert(data.message, 'error');
+      }
+    });
   }
 
   fileHandle(e) {

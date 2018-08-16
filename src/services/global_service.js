@@ -5,7 +5,7 @@
 class Globals {
 
   // production only url
-  // url= 'http://www.courtney.matthew-lefevre.com/server.php';
+  // url= 'http://courtney.matthew-lefevre.com/server.php';
   url= 'http://site2/server.php';
 
   headers= {
@@ -23,14 +23,7 @@ class Globals {
     return id;
   }
 
-  createRequest(data, jsonEncode = true) {
-    let jsonData;
-    
-    if(jsonEncode === true) {
-      jsonData = JSON.stringify(data);
-    } else {
-      jsonData = data;
-    }
+  createRequest(data) {
 
     let req = {
       method: 'POST',
@@ -38,10 +31,20 @@ class Globals {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: jsonData,
+      body: JSON.stringify(data),
     }
 
     return req;
+  }
+
+  createBody(controller, action, payload) {
+    let body = {
+      controller: controller,
+      action: action,
+      payload: payload,
+    }
+
+    return body;
   }
 }
 

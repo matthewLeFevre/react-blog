@@ -72,10 +72,45 @@
     }
 }
 
-.recent-posts__detail {
+.recent-post__detail {
+    @include transition();
     max-width: 100%;
+    color: $theme-black;
+    text-decoration: none;
+    margin: 1.5em 0;
+    display: block;
+
+    @include bp-tiny {
+        margin: 0;
+    }
+
+    h3 {
+        @include transition();
+        font-size: $mdm;
+    }
+
+    span {
+        display: block;
+        font-size: $sml;
+        line-height: 120%;
+        margin-bottom: 1.5em;
+        color: $grey-200;
+    }
+
+    &:hover {
+        h3 {
+            color: $theme-red;
+        }
+    }
+}
+
+.recent-post__img__cont {
+    @include flex(row, wrap, center, center);
+    max-height: 250px;
+    overflow: hidden;
 }
 
 .recent-post__img {
     width: 100%;
+
 }

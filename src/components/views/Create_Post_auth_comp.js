@@ -85,6 +85,7 @@ class CreatePost extends React.Component {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
+      // headers: {},
       body: JSON.stringify(data),
     }
 

@@ -1,10 +1,23 @@
+//================================
+// Imports
+//================================
+
+//React Library
 import React from 'react';
+import {Link} from 'react-router-dom';
+
+// Asset Imports 
 import banner_image from '../../images/banner_image.jpg';
+
+//Service Imports
 import Globals from '../../services/global_service';
 
+//Service Variables
 const Global = new Globals();
 
-
+//================================
+// Home Class
+//================================
 
 class Home extends React.Component {
 
@@ -86,16 +99,19 @@ class HomeRecentPosts extends React.Component {
 const PostDetail = props => {
   let date = new Date(props.post.articleCreated);
   return (
-    <div className="recent-post__detail">
+    <Link to={`/blog/post/${props.post.articleId}`} className="recent-post__detail">
       <h3>{props.post.articleTitle}</h3>
       <span>{date.toDateString()}</span>
-      <img className="recent-post__img" src={
-        props.post.assetPath
-        ?  props.post.assetPath
-        : "https://images.pexels.com/photos/386148/pexels-photo-386148.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-      } />
+      <div class="recent-post__img__cont">
+        <img className="recent-post__img" src={
+          props.post.assetPath
+          ?  props.post.assetPath
+          : "https://images.pexels.com/photos/386148/pexels-photo-386148.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+        } />
+      </div>
+      
       <p>{props.post.articleSummary}</p>
-    </div>
+    </Link>
   );
 }
 

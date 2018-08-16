@@ -24,8 +24,6 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      alert: '',
-      showAlert: false,
       userIsLoggedIn: false,
       email: '',
       password: '',
@@ -33,10 +31,6 @@ class Login extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-  }
-
-  hideAlert() {
-    this.setState({showAlert: false,});
   }
  
   handleInputChange(event) {
@@ -50,12 +44,11 @@ class Login extends React.Component {
   }
 
   handleLogin(event) {
-    if(this.state.email === false || this.state.password === false) {
+    if(this.state.email === '' || this.state.password === '') {
       this.setState({
         password: '',
-        alert: <Alert hideAlert={this.hideAlert} classes="alert--closeable bg-red txt-white" message="Please fill in both password and email fields." />,
-        showAlert: true,
       });
+      this.props.handleAlert("Please fill in both password and email fields.", "error");
     } else {
       const data = {
         controller: "user",
@@ -67,7 +60,8 @@ class Login extends React.Component {
       };
       const myInit = {
         method: 'POST',
-        headers: Global.header,
+        // headers: Global.header,
+        headers: {},
         body: JSON.stringify(data),
       };
       fetch(Global.url, myInit)
@@ -79,10 +73,7 @@ class Login extends React.Component {
             userIsLoggedIn: true,
           });
         } else {
-          this.setState({ 
-            alert: <Alert hideAlert={this.hideAlert} classes="alert--closeable bg-red txt-white" message={data.message} />,
-            showAlert: true,
-          });
+          this.props.handleAlert(data.message, "error");
         } 
       });
     }

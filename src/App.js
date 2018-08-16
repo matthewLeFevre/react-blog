@@ -17,6 +17,9 @@ import Blog from './components/views/Blog_comp';
 import Post from './components/views/Post_comp';
 import Dashboard from './components/views/Dashboard_auth_comp';
 
+//Reusable Component Imports
+import Alert from './components/reusable/alert_comp';
+
 //Form component imports
 import Login from './components/forms/Login_comp';
 import Register from './components/forms/Register_comp';
@@ -29,8 +32,14 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { userIsLoggedIn: false,};
+    this.state = { 
+      alet: '',
+      showAlert: false,
+      userIsLoggedIn: false,
+    };
     this.onLogin = this.onLogin.bind(this);
+    this.handleAlert = this.handleAlert.bind(this);
+    this.hideAlert = this.hideAlert.bind(this);
   }
 
   // function checkLogin
@@ -52,11 +61,38 @@ class App extends React.Component {
     });
   }
 
+  hideAlert() {this.setState({showAlert: false,});}
+
+  handleAlert(message, alertType, closable = true) {
+    let alertClasses;
+
+    if(alertType === 'success') {
+      alertClasses = "bg-green txt-white";
+    } else {
+      alertClasses = "bg-red txt-white";
+    }
+
+    if(closable) {
+      alertClasses += alertClasses + " alert--closeable";
+    } else {
+      alertClasses += alertClasses + " alert";
+    }
+
+    this.setState({
+      alert: <Alert hideAlert={this.hideAlert} classes={alertClasses} message={message} />,
+      showAlert: true,
+    });
+  }
+
   render() {       
     return (
       <div className="App">
         <Header />
         <main className="grid">
+        {this.state.showAlert 
+          ? this.state.alert 
+          : ''
+        }
         {this.state.userIsLoggedIn ? <DashboardToolbar /> : ""}
           <Switch>
             <Route 
@@ -72,15 +108,15 @@ class App extends React.Component {
               render={(props) => <Post {...props} />} />
             <Route 
               path="/login" 
-              render={(props) => <Login {...props} onLogin={this.onLogin} />} />
+              render={(props) => <Login {...props} onLogin={this.onLogin} handleAlert={this.handleAlert}/>} />
             <Route 
               path="/register" 
-              component={Register} />
+              render={(props) => <Register {...props} handleAlert={this.handleAlert}/>} />
             <Route 
               path="/dashboard" 
               render={(props) =>
                 this.state.userIsLoggedIn
-                ? <Dashboard {...props} userData={this.state.userData}/> 
+                ? <Dashboard {...props} handleAlert={this.handleAlert} userData={this.state.userData}/> 
                 : <Redirect to="/login" />
               }/>
           </Switch>

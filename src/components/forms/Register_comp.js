@@ -24,8 +24,6 @@ class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      alert: '',
-      showAlert: false,
       userIsRegistered: false,
       userName: '',
       userEmail: '',
@@ -34,10 +32,6 @@ class Register extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
-  }
-
-  hideAlert() {
-    this.setState({showAlert: false,});
   }
  
   handleInputChange(event) {
@@ -53,10 +47,7 @@ class Register extends React.Component {
   handleRegister(event) {
     event.preventDefault();
     if(this.state.userEmail == null || this.state.userPassword == null) {
-      this.setState({
-        alert: <Alert hideAlert={this.hideAlert} classes="alert--closeable bg-red txt-white" message="Please fill in both password and email fields." />,
-        showAlert: true,
-      });
+      this.props.handleAlert("Please fill in both password and email fields.", "error");
     } else {
       const data = {
         controller: "user",
@@ -76,14 +67,9 @@ class Register extends React.Component {
       .then(response => response.json())
       .then(data => {
         if(data.status === "success") {
-          this.setState({
-            userIsRegisterd: true,
-          });
+          this.props.handleAlert(data.message, "success");
         } else {
-          this.setState({ 
-            alert: <Alert hideAlert={this.hideAlert} classes="alert--closeable bg-red txt-white" message={data.message} />,
-            showAlert: true,
-          });
+          this.props.handleAlert(data.message, "error");
         }
       });
     }
@@ -103,7 +89,7 @@ class Register extends React.Component {
         <section className="bg-theme-red login__container">
           <div className="login__form__container">
             <form className="form--sml">
-              <h1 class="mdm">Register an account</h1>
+              <h1 className="mdm">Register an account</h1>
               <div className="form__field">
                 <label className="form__label mdm">Email</label>
                 <input 

@@ -1,8 +1,19 @@
+//================================
+// Imports
+//================================
+
+//React Library
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
+
+// View Component Imports
 import CreatePost from '../views/Create_Post_auth_comp';
 import CreateAsset from '../views/Create_Asset_auth_comp';
 import DashboardProfile from '../views/Dashboard_profile_comp';
+
+//================================
+// Dashboard
+//================================
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -18,24 +29,8 @@ class Dashboard extends React.Component {
     }
   }
 
-  // componentWillReceiveProps() {
-  //   this.setState({
-  //     userData: {
-  //       userId: this.props.userData.userId,
-  //       userStatus: this.props.userData.userStatus,
-  //       userName: this.props.userData.userName,
-  //       userEmail:this.props.userData.userEmail,
-  //       apiToken: this.props.userData.apiToken,
-  //     }
-  //   });
-  //   console.log(this.props);
-  // }
   render() {
-    // protects the route need to find a way to streamline this
-    
-      // if(this.props.userData.userId === false) {
-      //   return <Redirect to="/login" />;
-      // } 
+
     return(
       
       <section className="grid--nested column--12">
@@ -43,7 +38,7 @@ class Dashboard extends React.Component {
         <Switch>
           <Route 
             path="/dashboard/profile"
-            render={(props) => <DashboardProfile {...props} userData={this.props.userData} />}/>
+            render={(props) => <DashboardProfile handleAlert={this.props.handleAlert}{...props} userData={this.props.userData} />}/>
           <Route 
             path="/dashboard/messages" 
             render={(props) => <h1> You made it to messages </h1> }/>
@@ -52,13 +47,13 @@ class Dashboard extends React.Component {
             render={(props) => <h1> You made it to settings </h1> }/>
           <Route 
             path="/dashboard/createPost"
-            render={(props) => <CreatePost {...props} userData={this.props.userData} /> }/>
+            render={(props) => <CreatePost handleAlert={this.props.handleAlert}{...props} userData={this.props.userData} /> }/>
           <Route 
             path="/dashboard/createAsset"
-            render={(props) => <CreateAsset {...props} userData={this.props.userData} /> }/>
+            render={(props) => <CreateAsset handleAlert={this.props.handleAlert}{...props} userData={this.props.userData} /> }/>
           <Route 
             path="/dashboard/postEdit/:id" 
-            render={(props) => <CreatePost {...props} edit={true} userData={this.props.userData} /> }/>
+            render={(props) => <CreatePost handleAlert={this.props.handleAlert}{...props} edit={true} userData={this.props.userData} /> }/>
         </Switch>
       </section>
     );

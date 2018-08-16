@@ -1409,8 +1409,35 @@ body {
       grid-template-columns: 1fr 1fr;
       grid-gap: 1.5em; } }
 
-.recent-posts__detail {
-  max-width: 100%; }
+.recent-post__detail {
+  transition: all 300ms ease-in-out;
+  max-width: 100%;
+  color: #1F2D3D;
+  text-decoration: none;
+  margin: 1.5em 0;
+  display: block; }
+  @media screen and (min-width: 40em) {
+    .recent-post__detail {
+      margin: 0; } }
+  .recent-post__detail h3 {
+    transition: all 300ms ease-in-out;
+    font-size: 1.6em; }
+  .recent-post__detail span {
+    display: block;
+    font-size: 0.9em;
+    line-height: 120%;
+    margin-bottom: 1.5em;
+    color: #91999D; }
+  .recent-post__detail:hover h3 {
+    color: #DC304b; }
+
+.recent-post__img__cont {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  max-height: 250px;
+  overflow: hidden; }
 
 .recent-post__img {
   width: 100%; }

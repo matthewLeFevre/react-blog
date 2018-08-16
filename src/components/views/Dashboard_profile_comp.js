@@ -148,10 +148,10 @@ class AllPosts extends React.Component {
             ? this.state.posts.map((post) => {
               if(this.state.search !== '') {
                 if (post.articleTitle.includes(this.state.search)) {
-                  return <PostCard deletePost={this.props.deletePost} post={post} key={Global.createRandomKey(7)} />
+                  return <PostCard apiToken={this.props.userData.apiToken} deletePost={this.props.deletePost} post={post} key={Global.createRandomKey(7)} />
                 } 
               } else {
-                return <PostCard deletePost={this.props.deletePost} post={post} key={Global.createRandomKey(7)} />
+                return <PostCard apiToken={this.props.userData.apiToken} deletePost={this.props.deletePost} post={post} key={Global.createRandomKey(7)} />
               }
                 
               }) 
@@ -167,26 +167,70 @@ class AllPosts extends React.Component {
 // Functional Components
 //================================
 
-const PostCard = (props) => {
-  return (
-    <div className="item-card">
-      <div className={props.post.articleStatus === "published" ? "item-card__header bg-green" : "item-card__header bg-blue"}>
-        {props.post.articleStatus}
-      </div>
-      <div className="item-card__body">
-        <img src={props.post.assetPath ? props.post.assetPath : "https://images.pexels.com/photos/101472/pexels-photo-101472.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"} alt={props.post.articleTitle + " image"} className="item-card__img" />
-        <div className="item-card__text">
-          <h5 className="item-card__heading">{props.post.articleTitle}</h5>
-          <p className="item-card__description">{props.post.articleSummary ? props.post.articleSummary : "Lorum ipsum dolor profundis Lorume ispsume dolor profunids"}</p>
+class PostCard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      post: {
+        articleStatus: this.props.post.articleStatus,
+      }
+    }
+
+    this.handleStatusUpdate = this.handleStatusUpdate.bind(this);
+  }
+
+  handleStatusUpdate() {
+    let articleStatus;
+    if(this.state.post.articleStatus === "published") {
+      articleStatus = "saved";
+    } else {
+      articleStatus = "published";
+    }
+
+    const payload = {
+      articleId: this.props.post.articleId,
+      apiToken: this.props.apiToken,
+      articleStatus: articleStatus,
+    };
+    const body = Global.createBody("article", "updateArticleStatus", payload);
+
+    const req = Global.createRequest(body);
+
+    fetch(Global.url, req)
+    .then(request => request.json())
+    .then(data => {
+      if(data.status === 'success') {
+        this.setState({
+          post: {
+            articleStatus: articleStatus,
+          }
+        });
+      }
+    });
+  }
+
+  render() {
+    return (
+      <div className="item-card">
+        <div className={this.state.post.articleStatus === "published" ? "item-card__header bg-green" : "item-card__header bg-blue"}>
+          {this.state.post.articleStatus}
+        </div>
+        <div className="item-card__body">
+          <img src={this.props.post.assetPath ? this.props.post.assetPath : "https://images.pexels.com/photos/101472/pexels-photo-101472.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"} alt={this.props.post.articleTitle + " image"} className="item-card__img" />
+          <div className="item-card__text">
+            <h5 className="item-card__heading">{this.props.post.articleTitle}</h5>
+            <p className="item-card__description">{this.props.post.articleSummary ? this.props.post.articleSummary : "Lorum ipsum dolor profundis Lorume ispsume dolor profunids"}</p>
+          </div>
+        </div>
+        <div className="item-card__footer force-btn">
+          <Link to={`/dashboard/postEdit/${this.props.post.articleId}`} className="btn action tiny breath">Edit</Link>
+          {this.state.post.articleStatus === "saved"
+            ? <button type="button" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">Publish</button>
+            : <button type="button" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">UnPublish</button>}
+          <button type="button" className="btn danger tiny breath" onClick={this.props.deletePost} value={this.props.post.articleId}>Delete</button>
         </div>
       </div>
-      <div className="item-card__footer force-btn">
-        <Link to={`/dashboard/postEdit/${props.post.articleId}`} className="btn action tiny breath">Edit</Link>
-        { props.post.articleStatus === "saved"
-          ?<button type="button" className="btn action-alt tiny breath">Publish</button>
-          :<button type="button" className="btn action-alt tiny breath">UnPublish</button>}
-        <button type="button" className="btn danger tiny breath" onClick={props.deletePost} value={props.post.articleId}>Delete</button>
-      </div>
-    </div>
-  );
+    );
+  }
 }
