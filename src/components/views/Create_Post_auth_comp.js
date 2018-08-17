@@ -2,7 +2,6 @@ import React from 'react';
 import ImageSelect from '../reusable/Image_select_comp';
 import EditPostToolbar from '../layout/Edit_post_toolbar_comp';
 import Globals from '../../services/global_service';
-import Alert from '../reusable/alert_comp';
 
 const Global = new Globals();
 
@@ -11,8 +10,6 @@ class CreatePost extends React.Component {
     super(props);
 
     this.state = {
-      alert: '',
-      showAlert: false,
       edit: false,
       imageSelectIsOpen: false,
       articleTitle: '',
@@ -27,13 +24,10 @@ class CreatePost extends React.Component {
 
     // Event Handlers
     this.handleData = this.handleData.bind(this);
-    this.savePost = this.savePost.bind(this);
-    this.saveExistingPost = this.saveExistingPost.bind(this);
-    this.publishPost = this.publishPost.bind(this);
-    this.publishExistingPost = this.publishExistingPost.bind(this);
+    this.proccessPost = this.proccessPost.bind(this);
+    this.proccessExistingPost = this.proccessExistingPost.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.toggleImageSelect = this.toggleImageSelect.bind(this);
-    this.hideAlert = this.hideAlert.bind(this);
   }
 
   componentDidMount () {
@@ -56,7 +50,6 @@ class CreatePost extends React.Component {
 
   // Data entry events
   handleData(event) {
-    // console.log("changed");
     if(event.target.name === "articleTitle") {
       this.setState({articleTitle: event.target.value});
     }else if(event.target.name === "articleSummary") {
@@ -65,7 +58,7 @@ class CreatePost extends React.Component {
     this.setState({articleBody: this.articleBody.current.innerHTML}); 
   }
 
-  savePost() {
+  proccessPost(e) {
     let data = {
       controller: 'article',
       action: 'createArticle',
@@ -73,7 +66,7 @@ class CreatePost extends React.Component {
         articleTitle: this.state.articleTitle,
         articleSummary: this.state.articleSummary,
         articleBody: this.state.articleBody,
-        articleStatus: 'saved',
+        articleStatus: e.target.value,
         articleLink: 'unused',
         userId: this.props.userData.userId,
         apiToken: this.props.userData.apiToken
@@ -85,7 +78,6 @@ class CreatePost extends React.Component {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      // headers: {},
       body: JSON.stringify(data),
     }
 
@@ -94,52 +86,21 @@ class CreatePost extends React.Component {
     .then(data => {
       if(data.status === 'success') {
         this.setState({
-          alert: <Alert hideAlert={this.hideAlert} classes="alert--closeable bg-green txt-white" message={data.message} />,
-          showAlert: true,
           articleTitle: '',
           articleSummary: '',
           articleBody: '',
           articleStatus: '',
           articleLink: '',
         });
+        this.props.handleAlert(data.message, 'success');
+      } else {
+        this.props.handleAlert(data.message, 'error');
       }
     });
   }
 
-  hideAlert() {
-    this.setState({showAlert: false,});
-  }
-
-  publishPost() {
-    let data = {
-      controller: 'article',
-      action: 'createArticle',
-      payload: {
-        articleTitle: this.state.articleTitle,
-        articleSummary: this.state.articleSummary,
-        articleBody: this.state.articleBody,
-        articleStatus: 'published',
-        articleLink: 'unused',
-        userId: this.props.userData.userId,
-        apiToken: this.props.userData.apiToken
-      }
-    }
-
-    let req = {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(data),
-    }
-
-    fetch(Global.url, req)
-    .then(response => response.json())
-    .then(data => console.log(data));
-  }
-
-  saveExistingPost(){
+  proccessExistingPost(e){
+    console.log(e.target.value);
     let date = new Date();
     let data = {
       controller: 'article',
@@ -148,7 +109,7 @@ class CreatePost extends React.Component {
         articleTitle: this.state.articleTitle,
         articleSummary: this.state.articleSummary,
         articleBody: this.state.articleBody,
-        articleStatus: 'saved',
+        articleStatus: e.target.value,
         articleLink: 'unused',
         articleModified: date.toDateString(),
         articleId: this.state.articleId,
@@ -166,10 +127,14 @@ class CreatePost extends React.Component {
     }
     fetch(Global.url, req)
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => {
+      if(data.status === 'success') {
+        this.props.handleAlert(data.message, 'success');
+      } else {
+        this.props.handleAlert(data.message, 'error');
+      }
+    });
   }
-
-  publishExistingPost(){}
 
   // Manipulation Events
   toggleImageSelect() {
@@ -234,12 +199,12 @@ class CreatePost extends React.Component {
         
           {this.state.edit 
             ? <fieldset className="form__field blog__action-field">
-                <button type="button" onClick={this.saveExistingPost} className="btn primary isLink sml">Save</button>
-                <button type="button" onClick={this.publishExistingPost} className="btn primary isLink sml">Publish</button>
+                <button type="button" value="saved" onClick={this.proccessExistingPost} className="btn primary isLink sml">Save</button>
+                <button type="button" value="published" onClick={this.proccessExistingPost} className="btn primary isLink sml">Publish</button>
               </fieldset>
             : <fieldset className="form__field blog__action-field">
-                <button type="button" onClick={this.savePost} className="btn primary isLink sml">Save</button>
-                <button type="button" onClick={this.publishPost} className="btn secondary isLink sml">Publish</button>
+                <button type="button" value="saved" onClick={this.proccessPost} className="btn primary isLink sml">Save</button>
+                <button type="button" value="published" onClick={this.proccessPost} className="btn secondary isLink sml">Publish</button>
               </fieldset>
           }
       </form>

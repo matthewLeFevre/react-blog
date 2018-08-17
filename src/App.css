@@ -1322,6 +1322,18 @@ body {
     .all-photos__wrapper {
       border-left: 2.5px dashed #F95F62; } }
 
+.all-photos__container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1em 0; }
+
+.image-select__container {
+  width: 100%;
+  max-height: 50vh;
+  overflow-y: scroll; }
+
 .about-me__article {
   display: flex;
   justify-content: center;

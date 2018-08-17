@@ -19,9 +19,8 @@ class AllPhotos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
       refreshPhotos: false,
-      photos: [],
+      search: '',
     }
 
     this.updateSearch = this.updateSearch.bind(this);
@@ -36,8 +35,8 @@ class AllPhotos extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if(newProps.refreshPosts !== this.state.refreshPosts) {
-      this.setState({refreshPosts: newProps.refreshPosts});
+    if(newProps.refreshPhotos !== this.state.refreshPhotos) {
+      this.setState({refreshPhotos: newProps.refreshPhotos});
       fetch(`${Global.url}?controller=asset&action=getAssetsByUserId&userId=${this.props.userData.userId}`)
       .then(response => response.json())
       .then( (data) => {
@@ -64,15 +63,78 @@ class AllPhotos extends React.Component {
         </form>
         <div className="all-photos__container">
           { this.state.photos 
-              ? this.state.photos.map((photos) => {
-                  return <img src={photos.assetPath} className="img__list-item" />
-                }) 
+              ? this.state.photos.map((asset) => {
+                if(this.state.search !== '') {
+                  if (asset.assetName.includes(this.state.search)) {
+                    return <ImageItem  handleAlert={this.props.handleAlert} userData={this.props.userData} deletePhoto={this.props.deletePhoto}  asset={asset} key={Global.createRandomKey(7)}  />
+                  }
+                } else {
+                  return <ImageItem  handleAlert={this.props.handleAlert} userData={this.props.userData} deletePhoto={this.props.deletePhoto}  asset={asset} key={Global.createRandomKey(7)}  />
+                }
+              }) 
               : ''
             }
         </div>
       </section>
     );
   } 
+}
+
+class ImageItem extends React.Component { 
+  constructor(props) {
+    super(props);
+    this.state ={
+      assetStatus: this.props.asset.assetStatus,
+    }
+    this.handleStatusUpdate = this.handleStatusUpdate.bind(this);
+  }
+
+  handleStatusUpdate(e) {
+    let payload = {
+      assetId: this.props.asset.assetId, 
+      assetStatus: e.target.value,
+      apiToken: this.props.userData.apiToken,
+    }
+
+    let body = Global.createBody('asset', 'updateAssetStatus', payload);
+    let req = Global.createRequest(body);
+    fetch(Global.url, req)
+    .then(response => response.json())
+    .then(data => {
+      if(data.status === 'success') {
+        this.setState({
+          assetStatus: payload.assetStatus,
+        })
+      } else {
+        // this.props.handleAlert(data.message, data.status);
+        console.log(data);
+      }
+    })
+  }
+
+  render() {
+    return (
+      <div className="item-card">
+        <div className={this.state.assetStatus === "published" ? "item-card__header bg-green" : "item-card__header bg-blue"}>
+          {this.state.assetStatus}
+        </div>
+        <div className="item-card__body">
+          <img src={'https://images.unsplash.com/photo-1534411861793-72b823c99c2a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f5354511a6d7eea67d444bd6653c87be&auto=format&fit=crop&w=1061&q=80'} alt={this.props.asset.alt} className='item-card__img' />
+          <div className="item-card__text">
+            <h5 className="item-card__heading">Asset Name: {this.props.asset.assetName}</h5>
+          </div>
+        </div>
+        <div className="item-card__footer force-btn">
+          <button className="btn primary tiny breath">Preview</button>
+        {this.state.assetStatus === "saved"
+            ? <button type="button" value="published" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">Publish</button>
+            : <button type="button" value="saved" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">UnPublish</button>}
+            <button type="button" className="btn danger tiny breath" onClick={this.props.deletePhoto} value={this.props.asset.assetId}>Delete</button>
+        </div>
+      </div>
+    );
+  };
+  
 }
 
 //Export Statement

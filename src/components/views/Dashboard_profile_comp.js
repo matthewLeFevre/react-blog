@@ -31,6 +31,7 @@ class DashboardProfile extends React.Component {
       refreshPhotos: '',
     }
     this.deletePost = this.deletePost.bind(this);
+    this.deletePhoto = this.deletePhoto.bind(this);
     this.hideAlert = this.hideAlert.bind(this);
   }
 
@@ -42,31 +43,45 @@ class DashboardProfile extends React.Component {
 
   deletePost(e) {
     let data = {
-      controller: "article",
-      action: "deleteArticle",
-      payload: {
         articleId: e.target.value,
         apiToken: this.props.userData.apiToken,
-      }
     }
-    let req = {
-      method: "POST",
-      headers: Global.headers,
-      body: JSON.stringify(data),
-    }
+
+    let body = Global.createBody('article', 'deleteArticle', data);
+    let req = Global.createRequest(body);
+
     fetch(Global.url, req) 
     .then(response => response.json())
     .then(data => {
-      this.setState({
-        alert: <Alert hideAlert={this.hideAlert} classes="alert--closeable bg-green txt-white" message={data.message} />,
-        showAlert: true,
-        refreshPosts: Global.createRandomKey(7),
-      });
+      if(data.staus === 'success') {
+        this.setState({
+          refreshPosts: Global.createRandomKey(7),
+        });
+      } 
+      this.props.handleAlert(data.message, data.status);
     });
   }
 
-  deletePhotos(e) {
+  deletePhoto(e) {
+    console.log(e.target.value);
+    let data = {
+      assetId: e.target.value,
+      apiToken: this.props.userData.apiToken,
+    }
 
+    let body = Global.createBody('asset', 'deleteAsset', data);
+    let req = Global.createRequest(body);
+
+    fetch(Global.url, req) 
+    .then(response => response.json())
+    .then(data => {
+      if(data.staus === 'success') {
+        this.setState({
+          refreshPhotos: Global.createRandomKey(7),
+        });
+      } 
+      this.props.handleAlert(data.message, data.status);
+    });
   }
 
   render() {
@@ -78,8 +93,8 @@ class DashboardProfile extends React.Component {
         }
         <div className="grid--nested">
           {/* <RecentPosts deletePost={this.deletePost} userData={this.props.userData}/> */}
-          <AllPosts refreshPosts={this.state.refreshPosts} deletePost={this.deletePost} userData={this.props.userData}/>
-          <AllPhotos refreshPhotos={this.state.refreshPhotos} deletePhotos={this.deletePhotos} userData={this.props.userData} />
+          <AllPosts  handleAlert={this.props.handleAlert} refreshPosts={this.state.refreshPosts} deletePost={this.deletePost} userData={this.props.userData}/>
+          <AllPhotos  handleAlert={this.props.handleAlert} refreshPhotos={this.state.refreshPhotos} deletePhoto={this.deletePhoto} userData={this.props.userData} />
         </div>
       </div>
     );
@@ -153,8 +168,7 @@ class AllPosts extends React.Component {
               } else {
                 return <PostCard apiToken={this.props.userData.apiToken} deletePost={this.props.deletePost} post={post} key={Global.createRandomKey(7)} />
               }
-                
-              }) 
+            }) 
             : ''
           }
         </div>
@@ -170,19 +184,15 @@ class AllPosts extends React.Component {
 class PostCard extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      post: {
-        articleStatus: this.props.post.articleStatus,
-      }
+      articleStatus: this.props.post.articleStatus,
     }
-
     this.handleStatusUpdate = this.handleStatusUpdate.bind(this);
   }
 
   handleStatusUpdate() {
     let articleStatus;
-    if(this.state.post.articleStatus === "published") {
+    if(this.state.articleStatus === "published") {
       articleStatus = "saved";
     } else {
       articleStatus = "published";
@@ -202,10 +212,10 @@ class PostCard extends React.Component {
     .then(data => {
       if(data.status === 'success') {
         this.setState({
-          post: {
-            articleStatus: articleStatus,
-          }
+          articleStatus: articleStatus,
         });
+      } else {
+        this.props.handleAlert(data.message, data.status);
       }
     });
   }
@@ -213,8 +223,8 @@ class PostCard extends React.Component {
   render() {
     return (
       <div className="item-card">
-        <div className={this.state.post.articleStatus === "published" ? "item-card__header bg-green" : "item-card__header bg-blue"}>
-          {this.state.post.articleStatus}
+        <div className={this.state.articleStatus === "published" ? "item-card__header bg-green" : "item-card__header bg-blue"}>
+          {this.state.articleStatus}
         </div>
         <div className="item-card__body">
           <img src={this.props.post.assetPath ? this.props.post.assetPath : "https://images.pexels.com/photos/101472/pexels-photo-101472.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"} alt={this.props.post.articleTitle + " image"} className="item-card__img" />
@@ -225,7 +235,7 @@ class PostCard extends React.Component {
         </div>
         <div className="item-card__footer force-btn">
           <Link to={`/dashboard/postEdit/${this.props.post.articleId}`} className="btn action tiny breath">Edit</Link>
-          {this.state.post.articleStatus === "saved"
+          {this.state.articleStatus === "saved"
             ? <button type="button" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">Publish</button>
             : <button type="button" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">UnPublish</button>}
           <button type="button" className="btn danger tiny breath" onClick={this.props.deletePost} value={this.props.post.articleId}>Delete</button>
