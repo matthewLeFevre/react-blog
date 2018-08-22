@@ -89,7 +89,7 @@ class Login extends React.Component {
           ? this.state.alert
           : ''
         }
-      <section className="login__container bg-theme-red ">
+      <section className="login__container bg-theme-red page__full-height">
         <div className="login__form__container">
           <form className="form--sml">
             <div className="form__field">

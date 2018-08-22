@@ -24,6 +24,7 @@ class Post extends React.Component {
         articleTitle: data.data[0].articleTitle,
         articleSummary: data.data[0].articleSummary,
         articleBody: data.data[0].articleBody,
+        articleCreated: data.data[0].articleCreated
       },  ()=> this.articleBody.current.innerHTML = this.htmlDecode(this.state.articleBody));
     });
   }
@@ -31,12 +32,18 @@ class Post extends React.Component {
   render() {
     return(
       <article className="column--12">
-        <div>
-          <h1>{this.state.articleTitle}</h1>
-          <img src="https://images.pexels.com/photos/1095965/pexels-photo-1095965.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" className="post__banner-img"  alt="waves in the sea"/>
-        </div>
-        <div ref={this.articleBody}>
-          {this.state.articleBody}
+        <div className="article__wrapper">
+          <div>
+            <div className="article__intro">
+              <h1 className="article__title">{this.state.articleTitle}</h1>
+              <span className="article__date">{this.state.articleCreated}</span>
+            </div>
+            
+            <img className="article__img" src="https://images.pexels.com/photos/1095965/pexels-photo-1095965.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"  alt="waves in the sea"/>
+          </div>
+          <div ref={this.articleBody}>
+            {this.state.articleBody}
+          </div>
         </div>
       </article>
     );

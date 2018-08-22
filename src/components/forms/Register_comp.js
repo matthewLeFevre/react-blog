@@ -86,7 +86,7 @@ class Register extends React.Component {
           ? this.state.alert
           : ''
         }
-        <section className="bg-theme-red login__container">
+        <section className="bg-theme-red login__container page__full-height">
           <div className="login__form__container">
             <form className="form--sml">
               <h1 className="mdm">Register an account</h1>

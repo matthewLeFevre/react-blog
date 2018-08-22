@@ -28,7 +28,7 @@ class Header extends React.Component {
   render() {
     return (
       <header className="header bg-theme-red">
-        <Navbtn toggleNav={this.toggleNav} />
+        <Navbtn navOpen={this.state.navOpen} toggleNav={this.toggleNav} />
         <Navigation navOpen={this.state.navOpen} toggleNav={this.toggleNav} />
       </header>
     ); 
@@ -92,10 +92,16 @@ class Navigation extends React.Component {
 //================================
 
 const Navbtn = props => {
+  let icoClasses = 'nav__btn__ico';
+  let btnClasses = 'nav__btn';
+  if(props.navOpen) {
+    icoClasses += ' open';
+    btnClasses += ' open';
+  }
   return (
-    <div onClick={props.toggleNav} className="nav__btn"> 
+    <div onClick={props.toggleNav} className={btnClasses}>
       <span>Menu</span>
-      <div className="nav__btn__ico"></div> 
+      <div className={icoClasses}></div>  
     </div>
   );
 }

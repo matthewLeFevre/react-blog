@@ -102,7 +102,7 @@ const PostDetail = props => {
     <Link to={`/blog/post/${props.post.articleId}`} className="recent-post__detail">
       <h3>{props.post.articleTitle}</h3>
       <span>{date.toDateString()}</span>
-      <div class="recent-post__img__cont">
+      <div className="recent-post__img__cont">
         <img className="recent-post__img" src={
           props.post.assetPath
           ?  props.post.assetPath

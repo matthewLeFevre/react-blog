@@ -41,9 +41,10 @@
 
 .grid--nested { @include grid("grid--nested");}
 
+// simply 'column' would be a much more concise class name prefix
 .column {
-
-    // columns set without media queries
+    // Syntax: class="grid__column--3"
+    // ** NOT used enough to be justified move to alter**
     $column: 1;
     @while $column <= $columns {
         &--#{$column} {
@@ -51,18 +52,19 @@
         }
         $column: $column + 1;
     }
+}
 
-    // media query set columns
+.column {
     @each $size, $bp in $break-points {
         &--#{$size} {
-            $column: 1;
-            @while $column <= $columns {
-                &--#{$column} {
-                    @include bp($bp) {
+            @include bp($bp) {
+                $column: 1;
+                @while $column <= $columns {
+                    &--#{$column} {
                         grid-column: span $column;
                     }
+                    $column: $column + 1;
                 }
-                $column: $column + 1;
             }
         }
     }
@@ -71,4 +73,8 @@
 .grid__image {
     display: block;
     width: 100%;
+}
+
+.page__full-height {
+    min-height: 75vh; 
 }

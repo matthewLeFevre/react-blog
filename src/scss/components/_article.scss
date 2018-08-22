@@ -1,0 +1,33 @@
+.article__wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+.article__title {
+  
+  font-family: $cardo;
+  font-size: $mod;
+}
+
+.article__img {
+  max-width: 100%;
+}
+
+.article__summary {
+
+}
+
+.article__body {
+
+}
+
+.article__date {
+  color: $grey-200;
+  display: block;
+}
+
+.article__intro {
+  text-align: center;
+  margin: 1em;
+}

@@ -28,13 +28,16 @@ $nav-options: "sticky" "full-page" "responsive";
 		z-index: $z-3;
 		height: 100vh;
 		padding: 5em 3em;
+		background-color: $theme-orange;
 		@include bp-sml() {
 			height: auto;
 			padding: 0;
+			background-color: $theme-red;
 		}
 	}
 }
 .nav__btn { 
+	@include transition;
   position: fixed;
 	bottom: 0;
 	left: 0;
@@ -50,8 +53,13 @@ $nav-options: "sticky" "full-page" "responsive";
 	color: white;
 	cursor: pointer;
 	@include bp-sml() { display: none;}
+
+	&.open {
+		background-color: $theme-orange;
+	}
 }
   .nav__btn__ico {
+    @include transition;
     position: relative;
     display: flex;
     justify-content: center;
@@ -60,7 +68,6 @@ $nav-options: "sticky" "full-page" "responsive";
     height: 2px;
 		background-color: white;
 		margin-left: 1em;
-    @include transition;
     
     &:before {
       content: "";
