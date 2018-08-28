@@ -9,6 +9,9 @@ import {Link} from 'react-router-dom';
 // Asset Imports 
 import banner_image from '../../images/banner_image.jpg';
 
+//reusable Imports 
+import PostDetail from '../reusable/PostDetail_comp';
+
 //Service Imports
 import Globals from '../../services/global_service';
 
@@ -73,7 +76,7 @@ class HomeRecentPosts extends React.Component {
     }
   }
   componentDidMount() {
-    fetch(`${Global.url}?controller=article&action=getNumberOfArticles&articleNumber=6`)
+    fetch(`${Global.url}?controller=article&action=getNumberOfPublishedArticles&articleNumber=6`)
     .then(response => response.json())
     .then( (posts) => {
       this.setState({
@@ -96,24 +99,7 @@ class HomeRecentPosts extends React.Component {
   }
 }
 
-const PostDetail = props => {
-  let date = new Date(props.post.articleCreated);
-  return (
-    <Link to={`/blog/post/${props.post.articleId}`} className="recent-post__detail">
-      <h3>{props.post.articleTitle}</h3>
-      <span>{date.toDateString()}</span>
-      <div className="recent-post__img__cont">
-        <img className="recent-post__img" src={
-          props.post.assetPath
-          ?  props.post.assetPath
-          : "https://images.pexels.com/photos/386148/pexels-photo-386148.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-        } />
-      </div>
-      
-      <p>{props.post.articleSummary}</p>
-    </Link>
-  );
-}
+
 
 // const PostDisplay = props => {
 //   return (

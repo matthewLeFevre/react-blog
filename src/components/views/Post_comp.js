@@ -24,7 +24,8 @@ class Post extends React.Component {
         articleTitle: data.data[0].articleTitle,
         articleSummary: data.data[0].articleSummary,
         articleBody: data.data[0].articleBody,
-        articleCreated: data.data[0].articleCreated
+        articleCreated: data.data[0].articleCreated,
+        articleImagePath: data.data[0].articleImagePath,
       },  ()=> this.articleBody.current.innerHTML = this.htmlDecode(this.state.articleBody));
     });
   }
@@ -39,7 +40,7 @@ class Post extends React.Component {
               <span className="article__date">{this.state.articleCreated}</span>
             </div>
             
-            <img className="article__img" src="https://images.pexels.com/photos/1095965/pexels-photo-1095965.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"  alt="waves in the sea"/>
+            <img className="article__img" src={this.state.articleImagePath}  alt="waves in the sea"/>
           </div>
           <div ref={this.articleBody}>
             {this.state.articleBody}

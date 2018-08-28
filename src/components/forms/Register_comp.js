@@ -6,9 +6,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
-//Reusable Component Imports
-import Alert from '../reusable/alert_comp';
-
 //Service Imports
 import Globals from '../../services/global_service';
 

@@ -8,9 +8,7 @@
 .blog__title {
 	width: 100%;
 	border: 0;
-	border-top: 1px solid $border-grey2;
-	border-left: 1px solid $border-grey2;
-	border-right: 1px solid $border-grey2;
+	border: 1px solid $border-grey2;
 	padding: .5em;
 	font-size: $mod;
 }
@@ -25,6 +23,21 @@
 	height: 100px;
 	width: 100%;
 	font-family: $body;
+	display: block;
+}
+.blog__image-viewer {
+
+	margin: 1em;
+	display: block;
+	width: auto;
+	// border-left: 1px solid $border-grey2;
+	// border-right: 1px solid $border-grey2;
+	// display: block;
+	// width: 100%;
+}
+
+.blog__image-view {
+	width: 100%;
 	display: block;
 }
 

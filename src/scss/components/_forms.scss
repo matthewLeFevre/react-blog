@@ -33,6 +33,11 @@
 .form--lrg {
     @include form('form--limited', 1000px);
 }
+
+.form--full-width {
+    @include form('form');
+    min-width: 100%;
+}
 .form__pair { margin: 1em 0; }
 .form__label { 
     display: block;
@@ -76,6 +81,12 @@
     align-items: center;
 }
 .input--radio {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.input--hidden {
     visibility: hidden;
     position: absolute;
     right: 0;

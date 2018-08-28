@@ -7,8 +7,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 //Reusable Component Imports
-import RecentPosts from '../reusable/RecentPosts_comp';
-import Alert from '../reusable/alert_comp';
 import AllPhotos from '../reusable/AllPhotos_comp';
 
 //Service Imports
@@ -227,7 +225,7 @@ class PostCard extends React.Component {
           {this.state.articleStatus}
         </div>
         <div className="item-card__body">
-          <img src={this.props.post.assetPath ? this.props.post.assetPath : "https://images.pexels.com/photos/101472/pexels-photo-101472.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"} alt={this.props.post.articleTitle + " image"} className="item-card__img" />
+          <img src={this.props.post.articleImagePath ? this.props.post.articleImagePath : "https://images.pexels.com/photos/101472/pexels-photo-101472.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"} alt={this.props.post.articleTitle + " image"} className="item-card__img" />
           <div className="item-card__text">
             <h5 className="item-card__heading">{this.props.post.articleTitle}</h5>
             <p className="item-card__description">{this.props.post.articleSummary ? this.props.post.articleSummary : "Lorum ipsum dolor profundis Lorume ispsume dolor profunids"}</p>

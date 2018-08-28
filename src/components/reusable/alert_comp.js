@@ -1,6 +1,9 @@
 import React from 'react';
 
 const Alert = (props) =>  {
+  setTimeout(() => {
+    props.hideAlert();
+  }, 2000);
     return (
       <div className={props.classes}
         onClick={props.hideAlert}>

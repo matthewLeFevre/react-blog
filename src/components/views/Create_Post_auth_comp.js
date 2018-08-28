@@ -17,6 +17,8 @@ class CreatePost extends React.Component {
       articleBody: '',
       articleStatus: '',
       articleLink: '',
+      showImageModal: false,
+      showImage: false,
     }
 
     // Reference
@@ -28,6 +30,9 @@ class CreatePost extends React.Component {
     this.proccessExistingPost = this.proccessExistingPost.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.toggleImageSelect = this.toggleImageSelect.bind(this);
+    this.toggleImageModal = this.toggleImageModal.bind(this);
+    this.changeBlogImage = this.changeBlogImage.bind(this);
+    this.useImage = this.useImage.bind(this);
   }
 
   componentDidMount () {
@@ -35,7 +40,7 @@ class CreatePost extends React.Component {
       fetch(`${Global.url}?controller=article&action=getArticleById&articleId=${this.props.match.params.id}"`)
       .then(response => response.json())
       .then( (data) => {
-        // console.log(data);
+        console.log(data);
         this.setState({
           edit: this.props.edit,
           articleTitle: data.data[0].articleTitle,
@@ -43,6 +48,7 @@ class CreatePost extends React.Component {
           articleBody: data.data[0].articleBody,
           articleLink: data.data[0].articleLink,
           articleId: data.data[0].articleId,
+          showImage: data.data[0].articleImagePath,
         }, ()=> this.articleBody.current.innerHTML = this.htmlDecode(this.state.articleBody));
       });
     }
@@ -59,6 +65,11 @@ class CreatePost extends React.Component {
   }
 
   proccessPost(e) {
+    if(!this.state.showImage) {
+      this.setState({
+        showImage: 'https://images.unsplash.com/photo-1535219241072-7d3c28a49a5c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2dbd146cbe003c86454d987153e59d6a&auto=format&fit=crop&w=1048&q=80',
+      });
+    }
     let data = {
       controller: 'article',
       action: 'createArticle',
@@ -68,6 +79,7 @@ class CreatePost extends React.Component {
         articleBody: this.state.articleBody,
         articleStatus: e.target.value,
         articleLink: 'unused',
+        articleImage: this.state.showImage,
         userId: this.props.userData.userId,
         apiToken: this.props.userData.apiToken
       }
@@ -114,7 +126,8 @@ class CreatePost extends React.Component {
         articleModified: date.toDateString(),
         articleId: this.state.articleId,
         userId: this.props.userData.userId,
-        apiToken: this.props.userData.apiToken
+        apiToken: this.props.userData.apiToken,
+        articleImage: this.state.showImage,
       }
     }
     let req = {
@@ -164,6 +177,26 @@ class CreatePost extends React.Component {
     return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
   }
 
+  toggleImageModal(e) {
+    this.setState(prevState => ({
+      showImageModal: !prevState.showImageModal,
+    }));
+  }
+
+  changeBlogImage(e) {
+    this.setState({
+      showImage: e.target.value,
+    });
+    this.toggleImageModal();
+  }
+
+  useImage(e) {
+    this.setState({
+      showImage: e.target.value,
+      imageSelectIsOpen: false,
+    });
+  }
+
   render() {
 
     return(
@@ -172,7 +205,12 @@ class CreatePost extends React.Component {
         ? this.state.alert
         : ''
       }
-      <ImageSelect isOpen={this.state.imageSelectIsOpen} toggle={this.toggleImageSelect}/>
+      <ImageSelect userData={this.props.userData} isOpen={this.state.imageSelectIsOpen} toggle={this.toggleImageSelect} useImage={this.useImage}/>
+      {this.state.showImageModal
+        ? <ImageModal toggleImageModal={this.toggleImageModal}
+                      changeBlogImage={this.changeBlogImage}/>
+        : ''}
+      
       <EditPostToolbar action={this.handleEdit} />
       <form className="document" action="" >
         <input 
@@ -182,6 +220,17 @@ class CreatePost extends React.Component {
           placeholder="Title..." 
           onChange={this.handleData}
           value={this.state.articleTitle}/>
+          <button
+            className="btn blog__image-viewer action"
+            onClick={this.toggleImageModal}
+            type="button">Add file by url</button>
+          <button 
+            className="btn blog__image-viewer"
+            onClick={this.toggleImageSelect}
+            type="button">Select from uploaded Images</button>
+        {this.state.showImage
+          ? <img className="blog__image-view" src={this.state.showImage} alt={this.state.showImage} />
+          : ''}
         <textarea 
           name="articleSummary"
           type="text" 
@@ -214,4 +263,41 @@ class CreatePost extends React.Component {
 }
 
 export default CreatePost;
+
+class ImageModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      imagePath: '',
+    }
+    this.handelImageChange = this.handelImageChange.bind(this);
+  }
+
+  handelImageChange(e) {
+    this.setState({
+      imagePath: e.target.value,
+    })
+  }
+
+  render() {
+    return (
+      <div className='modal__container'>
+        <div className='modal'>
+          <div className='modal__header bg-theme-orange'>
+            <h5>Select or enter a url for this blog image</h5>
+          </div>
+          <div className="modal__body">
+          <form className="form--full-width">
+            <input onChange={this.handelImageChange} type="text" className='input--text initial full' placeholder="Enter an image URL"/>
+          </form>
+          </div>
+          <div className="modal__footer">
+            <button className="btn action breath" value={this.state.imagePath}  onClick={this.props.changeBlogImage} type="button" >Select</button>
+            <button className="btn action_alt breath"  onClick={this.props.toggleImageModal}>Cancel</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 

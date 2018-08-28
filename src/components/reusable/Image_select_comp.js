@@ -8,19 +8,26 @@ class ImageSelect extends React.Component {
     super(props);
     this.state ={
       images: "",
+      selectedImage: "",
     } 
+    this.imageSelect = this.imageSelect.bind(this);
   }
 
   componentWillReceiveProps() {
-    
     this.setState({
       isOpen: this.props.isOpen,
     });
   }
 
+  imageSelect (e) {
+    this.setState({
+      selectedImage: e.target.src,
+    });
+  }
+
   // get the images belonging to the authenticated user
   componentDidMount() {
-    fetch(`${Global.url}?controller=asset&action=getAssetsByUserId&userId=1`)
+    fetch(`${Global.url}?controller=asset&action=getPublishedAssetsByUserId&userId=${this.props.userData.userId}&apiToken=${this.props.userData.apiToken}`)
     .then(response => response.json())
     .then(data => this.setState({images: data.data,}));
   }
@@ -41,12 +48,12 @@ class ImageSelect extends React.Component {
               <div className="image-select__container">
                 {this.state.images
                   .map(
-                    (image) => <UserImage key={Global.createRandomKey(7)} data={image} />
+                    (image) => <UserImage key={Global.createRandomKey(7)} data={image} imageSelect={this.imageSelect}/>
                   )}
               </div>
             </div>
             <div className="modal__footer">
-              <button className="btn action isLink">Select</button>
+              <button className="btn action isLink" value={this.state.selectedImage} onClick={this.props.useImage}>Select</button>
               <button className="btn action-alt isLink" onClick={this.props.toggle}>Close</button>
             </div>
           </div>
@@ -60,10 +67,11 @@ class ImageSelect extends React.Component {
 
 export default ImageSelect;
 
+//I need to build some indication into the application that lets the user know the image has been selected
 const UserImage = (props) => {
   return (
     <div>{props.data.assetName}
-      <img className="img" alt={props.data.assetName} src={props.data.assetPath}/>
+      <img onClick={props.imageSelect} className="img" alt={props.data.assetName} src={props.data.assetPath}/>
     </div>
   );
 };

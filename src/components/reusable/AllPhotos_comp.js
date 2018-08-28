@@ -27,7 +27,7 @@ class AllPhotos extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`${Global.url}?controller=asset&action=getAssetsByUserId&userId=${this.props.userData.userId}`)
+    fetch(`${Global.url}?controller=asset&action=getAssetsByUserId&userId=${this.props.userData.userId}&apiToken=${this.props.userData.apiToken}`)
     .then(response => response.json())
     .then( (data) => {
       this.setState({photos: data.data,});
@@ -119,7 +119,9 @@ class ImageItem extends React.Component {
           {this.state.assetStatus}
         </div>
         <div className="item-card__body">
-          <img src={'https://images.unsplash.com/photo-1534411861793-72b823c99c2a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f5354511a6d7eea67d444bd6653c87be&auto=format&fit=crop&w=1061&q=80'} alt={this.props.asset.alt} className='item-card__img' />
+          <img src={this.props.asset.assetPath
+                    ? this.props.asset.assetPath
+                    : 'https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=1178&q=80'} alt={this.props.asset.assetName} className='item-card__img' />
           <div className="item-card__text">
             <h5 className="item-card__heading">Asset Name: {this.props.asset.assetName}</h5>
           </div>
