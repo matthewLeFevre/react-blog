@@ -68,10 +68,31 @@ class ImageSelect extends React.Component {
 export default ImageSelect;
 
 //I need to build some indication into the application that lets the user know the image has been selected
-const UserImage = (props) => {
-  return (
-    <div>{props.data.assetName}
-      <img onClick={props.imageSelect} className="img" alt={props.data.assetName} src={props.data.assetPath}/>
-    </div>
-  );
-};
+class UserImage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSelected: false,
+    }
+  }
+
+  select() {
+    this.setState({
+      isSelected:true,
+    })
+  }
+
+  render() {
+    return (
+      <div>{this.props.data.assetName}
+        <img onClick={this.props.imageSelect} 
+          className={this.state.isSelected
+            ? "img isSelected"
+            : "img"} 
+          alt={this.props.data.assetName} 
+          src={this.props.data.assetPath}/>
+      </div>
+    );
+  }
+}
+  

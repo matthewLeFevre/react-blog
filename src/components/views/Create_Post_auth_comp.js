@@ -240,7 +240,7 @@ class CreatePost extends React.Component {
           />
         <div 
           name="articleBody"
-          className="text-editor" 
+          className="text-editor article__body" 
           id="editor" 
           contentEditable 
           ref={this.articleBody}

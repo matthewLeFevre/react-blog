@@ -220,23 +220,23 @@ class PostCard extends React.Component {
 
   render() {
     return (
-      <div className="item-card">
-        <div className={this.state.articleStatus === "published" ? "item-card__header bg-green" : "item-card__header bg-blue"}>
-          {this.state.articleStatus}
-        </div>
-        <div className="item-card__body">
+      <div className="control-card">
+        <div className={this.state.articleStatus === "published" ? "control-card__status bg-green" : "control-card__status bg-blue"}></div>
+        <div>
+        <div className="control-card__body">
           <img src={this.props.post.articleImagePath ? this.props.post.articleImagePath : "https://images.pexels.com/photos/101472/pexels-photo-101472.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"} alt={this.props.post.articleTitle + " image"} className="item-card__img" />
-          <div className="item-card__text">
-            <h5 className="item-card__heading">{this.props.post.articleTitle}</h5>
-            <p className="item-card__description">{this.props.post.articleSummary ? this.props.post.articleSummary : "Lorum ipsum dolor profundis Lorume ispsume dolor profunids"}</p>
+          <div className="control-card__text">
+            <h5 className="control-card__heading">{`${this.props.post.articleTitle.slice(0, 17)}...`}</h5>
+            <p className="control-card__description">{this.props.post.articleSummary ? `${this.props.post.articleSummary.slice(0, 60)}...` : "Lorum ipsum dolor profundis Lorume ispsume dolor profunids"}</p>
           </div>
         </div>
-        <div className="item-card__footer force-btn">
-          <Link to={`/dashboard/postEdit/${this.props.post.articleId}`} className="btn action tiny breath">Edit</Link>
+        <div className="control-card__footer force-btn">
           {this.state.articleStatus === "saved"
-            ? <button type="button" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">Publish</button>
-            : <button type="button" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">UnPublish</button>}
+            ? <button type="button" onClick={this.handleStatusUpdate} className="btn primary tiny breath">Private</button>
+            : <button type="button" onClick={this.handleStatusUpdate} className="btn success tiny breath">Published</button>}
+          <Link to={`/dashboard/postEdit/${this.props.post.articleId}`} className="btn action tiny breath">Edit</Link>
           <button type="button" className="btn danger tiny breath" onClick={this.props.deletePost} value={this.props.post.articleId}>Delete</button>
+        </div>
         </div>
       </div>
     );

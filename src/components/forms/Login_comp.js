@@ -109,17 +109,17 @@ class Login extends React.Component {
                 onChange={this.handleInputChange}
                 autoComplete="on"/>
             </div>
-            <fieldset className="form__field">
+            {/* <fieldset className="form__field">
               <label className="form__label side">Stay LoggedIn</label>
               <input className="input--checkbox" 
                 type="checkbox" 
                 id="stayLoggedIn"
                 name="stayLoggedIn" />
               <label className="label--checkbox" htmlFor="stayLoggedIn"></label>
-            </fieldset>
+            </fieldset> */}
             <div className="form__field">
               <button onClick={this.handleLogin} type="button" className="btn primary sml">Login</button>
-              <Link to="/register" className="btn primary isLink sml">Register</Link>
+              <Link to="/register" className="btn primary isLink sml">Create Account</Link>
             </div>
           </form>
         </div>

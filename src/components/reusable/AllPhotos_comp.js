@@ -114,24 +114,25 @@ class ImageItem extends React.Component {
 
   render() {
     return (
-      <div className="item-card">
-        <div className={this.state.assetStatus === "published" ? "item-card__header bg-green" : "item-card__header bg-blue"}>
-          {this.state.assetStatus}
+      <div className="control-card">
+        <div className={this.state.assetStatus === "published" ? "control-card__status bg-green" : "control-card__status bg-blue"}>
         </div>
-        <div className="item-card__body">
-          <img src={this.props.asset.assetPath
-                    ? this.props.asset.assetPath
-                    : 'https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=1178&q=80'} alt={this.props.asset.assetName} className='item-card__img' />
-          <div className="item-card__text">
-            <h5 className="item-card__heading">Asset Name: {this.props.asset.assetName}</h5>
+        <div>
+          <div className="control-card__body">
+            <img src={this.props.asset.assetPath
+                      ? this.props.asset.assetPath
+                      : 'https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=1178&q=80'}  className='item-card__img' />
+            <div className="control-card__text">
+              <h5 className="control-card__heading">Asset Name: {`${this.props.asset.assetName.slice(0, 17)}...`}</h5>
+            </div>
           </div>
-        </div>
-        <div className="item-card__footer force-btn">
-          <button className="btn primary tiny breath">Preview</button>
-        {this.state.assetStatus === "saved"
-            ? <button type="button" value="published" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">Publish</button>
-            : <button type="button" value="saved" onClick={this.handleStatusUpdate} className="btn action-alt tiny breath">UnPublish</button>}
-            <button type="button" className="btn danger tiny breath" onClick={this.props.deletePhoto} value={this.props.asset.assetId}>Delete</button>
+          <div className="control-card__footer force-btn">
+            <button className="btn primary tiny breath">Preview</button>
+          {this.state.assetStatus === "saved"
+              ? <button type="button" value="published" onClick={this.handleStatusUpdate} className="btn primary tiny breath">Private</button>
+              : <button type="button" value="saved" onClick={this.handleStatusUpdate} className="btn secondary tiny breath">Published</button>}
+              <button type="button" className="btn danger tiny breath" onClick={this.props.deletePhoto} value={this.props.asset.assetId}>Delete</button>
+          </div>
         </div>
       </div>
     );

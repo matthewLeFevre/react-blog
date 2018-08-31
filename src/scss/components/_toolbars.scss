@@ -103,3 +103,11 @@
       margin: 0 1em;
     }
 }
+
+.dashboard__toolbar__words {
+  display: none;
+  @include bp-tiny {
+    display: block;
+    margin: 0 .5em;
+  }
+}

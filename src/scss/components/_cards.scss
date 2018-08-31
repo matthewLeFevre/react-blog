@@ -73,3 +73,61 @@
 	padding: .5em;
 	border-top: 1px solid $theme-grey;
 }
+
+.control-card {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	width: 300px;
+	margin: .5em;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	border-radius: $br;
+  text-decoration: none;
+	background-color: $theme-light;
+	max-height: 130px;
+	overflow: hidden;
+}
+
+.control-card__img {
+	height: 80px;
+	vertical-align: middle;
+}
+.control-card__body {
+  @include flex(row, nowrap, flex-start, flex-start);
+	height: 80px;
+	width: 100%;
+}
+.control-card__text { 
+	padding: .6em;
+	font-size: $tiny;
+	height: 100%;
+}
+.control-card__heading { 
+  font-size: $mid;
+  font-family: $main-font;
+	color: $theme-grey;
+	margin-bottom: .25em;
+}
+.control-card__description {
+	font-family: $body;
+	padding-left: .5em;
+	border-left: 3px solid $theme-red;
+  color: black;
+	line-height: 1;
+	font-family: $main-font;
+}
+.control-card__header {
+  font-family: $main-font;
+  color: $theme-light;
+	padding: .5em;
+	background-color: $theme-grey;
+}
+.control-card__footer {
+	padding: .5em;
+	border-top: 1px solid $theme-grey;
+}
+
+.control-card__status {
+	min-width: 10px;
+	height: 130px;
+}

@@ -86,7 +86,7 @@ class Register extends React.Component {
         <section className="bg-theme-red login__container page__full-height">
           <div className="login__form__container">
             <form className="form--sml">
-              <h1 className="mdm">Register an account</h1>
+              <h1 className="mdm">Create an account</h1>
               <div className="form__field">
                 <label className="form__label mdm">Email</label>
                 <input 
@@ -115,7 +115,7 @@ class Register extends React.Component {
                   onChange={this.handleInputChange}/>
               </div>
               <div className="form__field">
-                <button onClick={this.handleRegister} type="button" className="btn sml primary">Register</button>
+                <button onClick={this.handleRegister} type="button" className="btn sml primary">Create Account</button>
                 <Link to="/login" className="btn primary isLink sml">Login</Link>
               </div>
             </form>
