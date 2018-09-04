@@ -37,3 +37,15 @@
 .isSelected {
   background-color: $blue;
 }
+
+.user__img__wrapper {
+  cursor: pointer;
+  height: 150px;
+  width: 150px;
+  overflow: hidden;
+}
+
+.user__img {
+  height: auto;
+  width: 150px;
+}

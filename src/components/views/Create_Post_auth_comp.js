@@ -1,6 +1,13 @@
+//================================
+// Imports
+//================================
+
+//React Library
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import ImageSelect from '../reusable/Image_select_comp';
 import EditPostToolbar from '../layout/Edit_post_toolbar_comp';
+import ImageModal from '../reusable/Img_modal_comp';
 import Globals from '../../services/global_service';
 
 const Global = new Globals();
@@ -19,6 +26,7 @@ class CreatePost extends React.Component {
       articleLink: '',
       showImageModal: false,
       showImage: false,
+      redirectDashboard: false,
     }
 
     // Reference
@@ -54,7 +62,12 @@ class CreatePost extends React.Component {
     }
   }
 
-  // Data entry events
+  // This handles all data events for the 
+  //  title
+  //  Summary
+  //  body 
+  // of the article
+
   handleData(event) {
     if(event.target.name === "articleTitle") {
       this.setState({articleTitle: event.target.value});
@@ -65,25 +78,35 @@ class CreatePost extends React.Component {
   }
 
   proccessPost(e) {
+
+    //define this logic
     if(!this.state.showImage) {
       this.setState({
         showImage: 'https://images.unsplash.com/photo-1535219241072-7d3c28a49a5c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2dbd146cbe003c86454d987153e59d6a&auto=format&fit=crop&w=1048&q=80',
       });
     }
+
+    // setting up request data for the server
     let data = {
       controller: 'article',
       action: 'createArticle',
       payload: {
+        // Items saved in state
         articleTitle: this.state.articleTitle,
         articleSummary: this.state.articleSummary,
         articleBody: this.state.articleBody,
-        articleStatus: e.target.value,
-        articleLink: 'unused',
         articleImage: this.state.showImage,
+        // Items passed to this element that are not
+        // part of user input
         userId: this.props.userData.userId,
-        apiToken: this.props.userData.apiToken
+        apiToken: this.props.userData.apiToken,
+        // Selected based on user submission
+        articleStatus: e.target.value,
+        // requires deletion
       }
     }
+
+    // configuring request
     let req = {
       method: 'POST',
       headers: {
@@ -98,11 +121,7 @@ class CreatePost extends React.Component {
     .then(data => {
       if(data.status === 'success') {
         this.setState({
-          articleTitle: '',
-          articleSummary: '',
-          articleBody: '',
-          articleStatus: '',
-          articleLink: '',
+          redirectDashboard: true,
         });
         this.props.handleAlert(data.message, 'success');
       } else {
@@ -199,6 +218,12 @@ class CreatePost extends React.Component {
 
   render() {
 
+    if(this.state.redirectDashboard) {
+      return(
+        <Redirect to="/dashboard/profile"/>
+      );
+    }
+
     return(
       <section className="column--12">
       {this.state.showAlert
@@ -264,40 +289,5 @@ class CreatePost extends React.Component {
 
 export default CreatePost;
 
-class ImageModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      imagePath: '',
-    }
-    this.handelImageChange = this.handelImageChange.bind(this);
-  }
 
-  handelImageChange(e) {
-    this.setState({
-      imagePath: e.target.value,
-    })
-  }
-
-  render() {
-    return (
-      <div className='modal__container'>
-        <div className='modal'>
-          <div className='modal__header bg-theme-orange'>
-            <h5>Select or enter a url for this blog image</h5>
-          </div>
-          <div className="modal__body">
-          <form className="form--full-width">
-            <input onChange={this.handelImageChange} type="text" className='input--text initial full' placeholder="Enter an image URL"/>
-          </form>
-          </div>
-          <div className="modal__footer">
-            <button className="btn action breath" value={this.state.imagePath}  onClick={this.props.changeBlogImage} type="button" >Select</button>
-            <button className="btn action_alt breath"  onClick={this.props.toggleImageModal}>Cancel</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
 

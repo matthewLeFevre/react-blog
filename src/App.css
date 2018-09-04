@@ -1341,6 +1341,16 @@ body {
 .isSelected {
   background-color: #084887; }
 
+.user__img__wrapper {
+  cursor: pointer;
+  height: 150px;
+  width: 150px;
+  overflow: hidden; }
+
+.user__img {
+  height: auto;
+  width: 150px; }
+
 .article__wrapper {
   max-width: 700px;
   margin: 0 auto;

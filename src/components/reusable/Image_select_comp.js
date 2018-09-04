@@ -9,6 +9,7 @@ class ImageSelect extends React.Component {
     this.state ={
       images: "",
       selectedImage: "",
+      selectedSource: ""
     } 
     this.imageSelect = this.imageSelect.bind(this);
   }
@@ -21,7 +22,8 @@ class ImageSelect extends React.Component {
 
   imageSelect (e) {
     this.setState({
-      selectedImage: e.target.src,
+      selectedImage: e.target.value,
+      selectedSource: e.target.value
     });
   }
 
@@ -31,9 +33,6 @@ class ImageSelect extends React.Component {
     .then(response => response.json())
     .then(data => this.setState({images: data.data,}));
   }
-
-  
-
 
   render() {
 
@@ -48,7 +47,7 @@ class ImageSelect extends React.Component {
               <div className="image-select__container">
                 {this.state.images
                   .map(
-                    (image) => <UserImage key={Global.createRandomKey(7)} data={image} imageSelect={this.imageSelect}/>
+                    (image) => <UserImage selectedSource={this.state.selectedSource} key={Global.createRandomKey(7)} data={image} imageSelect={this.imageSelect}/>
                   )}
               </div>
             </div>
@@ -74,23 +73,40 @@ class UserImage extends React.Component {
     this.state = {
       isSelected: false,
     }
+
+  
   }
 
-  select() {
+  componentWillReceiveProps() {
+    console.log(this.props.selectedSource);
+    console.log(this.props.data.assetPath);
+    if(this.props.selectedSource === this.props.data.assetPath) {
+      this.setState({
+        isSelected: true,
+      })
+    }
+  }
+
+  componentDidMount() {
+    console.log(this.props.data.assetPath);
     this.setState({
-      isSelected:true,
-    })
+      assetName: this.props.data.assetName,
+      assetPath: this.props.data.assetPath,
+    });
   }
 
   render() {
     return (
-      <div>{this.props.data.assetName}
-        <img onClick={this.props.imageSelect} 
-          className={this.state.isSelected
-            ? "img isSelected"
-            : "img"} 
-          alt={this.props.data.assetName} 
-          src={this.props.data.assetPath}/>
+      <div className={this.state.isSelected
+                  ? 'user__img__wrapper isSelected'
+                  : 'user__img__wrapper'}
+                  onClick={this.props.imageSelect}
+      >
+        <img 
+          className="user__img"
+          alt={this.state.assetName} 
+          src={this.state.assetPath}
+          value={this.state.assetPath}/>
       </div>
     );
   }

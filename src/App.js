@@ -14,8 +14,11 @@ import DashboardToolbar from './components/layout/Dashboard_toolbar_comp';
 //Whole view imports
 import Home from './components/views/Home_comp';
 import Blog from './components/views/Blog_comp';
+import AboutMe from './components/views/AboutMe_comp';
 import Post from './components/views/Post_comp';
 import Dashboard from './components/views/Dashboard_auth_comp';
+import PageNotFound from './components/views/PageNotFound_comp';
+import Gallery from './components/views/Gallery_comp';
 
 //Reusable Component Imports
 import Alert from './components/reusable/alert_comp';
@@ -61,6 +64,8 @@ class App extends React.Component {
     });
   }
 
+
+  // Functions Handle Alerts for whole application
   hideAlert() {this.setState({showAlert: false,});}
 
   handleAlert(message, alertType, closable = true) {
@@ -91,36 +96,60 @@ class App extends React.Component {
         <main className="grid">
         {this.state.showAlert 
           ? this.state.alert 
-          : ''
-        }
-        {this.state.userIsLoggedIn ? <DashboardToolbar /> : ""}
+          : ''}
+        {this.state.userIsLoggedIn 
+          ? <DashboardToolbar /> 
+          : ''}
           <Switch>
             <Route 
               exact={true} 
               path="/" 
               component={Home} />
+
+            <Route 
+              exact={true} 
+              path="/about" 
+              component={AboutMe} />
+
+            <Route 
+              exact={true} 
+              path="/gallery" 
+              component={Gallery} />
+
             <Route 
               exact={true} 
               path="/blog" 
               component={Blog} />
-              <Route 
+
+            <Route 
               path="/blog/post/:id" 
               render={(props) => <Post {...props} />} />
+
             <Route 
               path="/login" 
-              render={(props) => <Login {...props} onLogin={this.onLogin} handleAlert={this.handleAlert}/>} />
+              render={(props) => 
+                <Login {...props} 
+                  onLogin={this.onLogin} 
+                  handleAlert={this.handleAlert}/>
+            }/>
+
             <Route 
               path="/register" 
               render={(props) => <Register {...props} handleAlert={this.handleAlert}/>} />
+
             <Route 
               path="/dashboard" 
               render={(props) =>
                 this.state.userIsLoggedIn
-                ? <Dashboard {...props} handleAlert={this.handleAlert} userData={this.state.userData}/> 
+                ? <Dashboard {...props} 
+                    handleAlert={this.handleAlert} 
+                    userData={this.state.userData}/> 
                 : <Redirect to="/login" />
               }/>
+
+            <Route component={PageNotFound} />
+
           </Switch>
-          
         </main>
         <Footer auth={this.state.userIsLoggedIn}/>
       </div>

@@ -9,6 +9,7 @@ class CreateAsset extends React.Component {
     this.state = {
       hasImages: false,
       images: [],
+      fileArr: []
     }
 
     this.previewFile = this.previewFile.bind(this);
@@ -29,7 +30,6 @@ class CreateAsset extends React.Component {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      console.log(this.state.images);
       let images = this.state.images;
       images.push(reader.result);
       this.setState((prevState) => ({
@@ -38,36 +38,43 @@ class CreateAsset extends React.Component {
     }
   }
 
-  uploadFile(file) {
-    console.log(file);
-    let fileData = new FormData();
-    
-    fileData.append('controller', 'asset');
-    fileData.append('action', 'createAsset');
-    fileData.append('userId', this.props.userData.userId);
-    fileData.append('assetStatus', 'saved');
-    fileData.append('apiToken', this.props.userData.apiToken);
-    fileData.append('fileUpload', file);
-    const req = {
-      method: 'POST',
-      body: fileData,
-    };
-    fetch(Global.url, req)
-    .then(response => response.json())
-    .then(data => {
-      if(data.status === 'success') {
-        this.props.handleAlert(data.message, 'success');
-      } else {
-        this.props.handleAlert(data.message, 'error');
-      }
-    });
+  uploadFile() {
+    console.log(this.state.filesArr);
+    for ( let file of this.state.filesArr) {
+      let fileData = new FormData();
+      fileData.append('controller', 'asset');
+      fileData.append('action', 'createAsset');
+      fileData.append('userId', this.props.userData.userId);
+      fileData.append('assetStatus', 'saved');
+      fileData.append('apiToken', this.props.userData.apiToken);
+      fileData.append('fileUpload', file);
+      const req = {
+        method: 'POST',
+        body: fileData,
+      };
+      fetch(Global.url, req)
+      .then(response => response.json())
+      .then(data => {
+        if(data.status === 'success') {
+          this.props.handleAlert(data.message, 'success');
+          this.setState({
+            images: [],
+          });
+        } else {
+          this.props.handleAlert(data.message, 'error');
+        }
+      });
+    }
   }
 
   fileHandle(e) {
     let files = e.target.files;
     let filesArr = [...files];
+    console.log(files);
     filesArr.forEach(this.previewFile);
-    filesArr.forEach(this.uploadFile);
+    this.setState({
+      filesArr: filesArr,
+    });
   }
 
   dropHandle (e) {
@@ -99,7 +106,7 @@ class CreateAsset extends React.Component {
 
   render() {
     return(
-      <div className="column--12">
+      <div className="column--12 page__full-height">
         <form className="form--mdm grid--nested create">
           <h1 className="column--12">Upload Assets</h1>
           <fieldset onDrop={this.dropHandle} 
@@ -116,7 +123,7 @@ class CreateAsset extends React.Component {
                    id="asset-upload" 
                    accept="image/*" 
                    multiple/>
-            <button type="button" className="btn primary main breath">Upload</button>
+            <button type="button" className="btn primary main breath" onClick={this.uploadFile}>Upload</button>
             <div className="img__list">
               {this.state.images.map((imgUrl, i) => { 
                   return <img className="img__list-item" src={imgUrl} key={i} alt="Rendered File Upload"/>;

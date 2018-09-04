@@ -4,7 +4,6 @@
 
 //React Library
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 // Asset Imports 
 import banner_image from '../../images/banner_image.jpg';
@@ -36,7 +35,7 @@ class Home extends React.Component {
 
   render() {
     return ( 
-      <section className="column--12">
+      <section className="column--12 page__full-height">
         <div className="grid--limited-padded--home">
           <div className="home__container column--12">
             <HomeIntro />
@@ -52,7 +51,7 @@ const HomeIntro = () => {
   return(
     <figure className="home-intro">
       <div className="home__img__container">
-        <img className="home__img--welcome" src={banner_image} />
+        <img className="home__img--welcome" src={banner_image} alt=''/>
       </div>
       <figcaption className="home-intro__text">
         <h1 className="home-intro__heading">Courtney LeFevre</h1>
