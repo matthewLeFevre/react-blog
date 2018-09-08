@@ -85,7 +85,9 @@ class CreateAsset extends React.Component {
     let files = dt.files;
     let filesArr = [...files];
     filesArr.forEach(this.previewFile);
-    filesArr.forEach(this.uploadFile);
+    this.setState({
+      filesArr: filesArr,
+    });
   }
 
   enterHandle (e) {

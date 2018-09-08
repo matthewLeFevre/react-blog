@@ -55,7 +55,7 @@ const HomeIntro = () => {
       </div>
       <figcaption className="home-intro__text">
         <h1 className="home-intro__heading">Courtney LeFevre</h1>
-        <p className="home-intro__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p className="home-intro__message">I am a member of The Church of Jesus Christ of Latter-Day Saints. I love to write and wanted to share my experiences with others. I will write blogs about my spiritual experiences, parenting experiences and just updates on my life. I hope you like what you read!</p>
         <div>
           <a className="btn icon action breath sml"><i className="fab fa-facebook-f"></i></a>
           <a className="btn icon action breath sml"><i className="fab fa-instagram"></i></a>

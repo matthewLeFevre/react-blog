@@ -40,8 +40,8 @@ class Post extends React.Component {
               <h1 className="article__title">{this.state.articleTitle}</h1>
               <span className="article__date">{this.state.articleCreated}</span>
             </div>
-            
-            <img className="article__img" src={this.state.articleImagePath}  alt="waves in the sea"/>
+            <p className="article__summary"> {this.state.articleSummary} </p>
+            <img className="article__img" src={this.state.articleImagePath}  alt={this.state.articleTitle}/>
           </div>
           <div className="article__body" ref={this.articleBody}>
             {this.state.articleBody}

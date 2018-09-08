@@ -6,6 +6,7 @@ class Globals {
 
   // production only url
   // url= 'http://courtney.matthew-lefevre.com/server.php';
+  // url= 'http://courtneylefevre.com/server.php';
   url= 'http://site2/server.php';
 
   headers= {

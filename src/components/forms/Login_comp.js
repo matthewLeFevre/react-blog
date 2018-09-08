@@ -119,7 +119,7 @@ class Login extends React.Component {
             </fieldset> */}
             <div className="form__field">
               <button onClick={this.handleLogin} type="button" className="btn primary sml">Login</button>
-              <Link to="/register" className="btn primary isLink sml">Create Account</Link>
+              {/* <Link to="/register" className="btn primary isLink sml">Create Account</Link> */}
             </div>
           </form>
         </div>

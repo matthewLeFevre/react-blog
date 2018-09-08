@@ -95,6 +95,7 @@ class DashboardProfile extends React.Component {
             userData={this.props.userData}/>
           <AllPhotos  
             handleAlert={this.props.handleAlert} 
+            handleImgPreview={this.props.handleImgPreview}
             refreshPhotos={this.state.refreshPhotos} 
             deletePhoto={this.deletePhoto} 
             userData={this.props.userData} />

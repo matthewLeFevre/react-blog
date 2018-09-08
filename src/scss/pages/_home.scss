@@ -61,6 +61,10 @@
     }
 }
 
+.home-intro__message {
+    margin: .25em auto;
+}
+
 
 .recent-posts__grid {
     padding: 1.5em;
@@ -107,6 +111,7 @@
     @include flex(row, wrap, center, center);
     max-height: 250px;
     overflow: hidden;
+    margin-bottom: .5em;
 }
 
 .recent-post__img {

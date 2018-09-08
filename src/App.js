@@ -5,6 +5,8 @@
 //React Library
 import React from 'react';
 import {Route,Switch,Redirect} from 'react-router-dom';
+import ReactGA from 'react-ga';
+import createHistory from 'history/createBrowserHistory';
 
 //Static layout component imports
 import Header from './components/layout/Header_comp';
@@ -22,10 +24,21 @@ import Gallery from './components/views/Gallery_comp';
 
 //Reusable Component Imports
 import Alert from './components/reusable/alert_comp';
+import ImgPreview from './components/reusable/imagePreview_comp';
 
 //Form component imports
 import Login from './components/forms/Login_comp';
-import Register from './components/forms/Register_comp';
+// import Register from './components/forms/Register_comp';
+
+// Trying to figure out Google analytics
+
+ReactGA.initialize();
+
+const history = createHistory();
+history.listen((location, action) => {
+  ReactGA.set({ page: location.pathname });
+  ReactGA.pageview(location.pathname);
+});
 
 //================================
 // App Class
@@ -36,13 +49,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      alet: '',
+      alert: '',
       showAlert: false,
       userIsLoggedIn: false,
+      imgPreview: '',
+      showImgPreview: false,
     };
     this.onLogin = this.onLogin.bind(this);
     this.handleAlert = this.handleAlert.bind(this);
     this.hideAlert = this.hideAlert.bind(this);
+    this.handleImgPreview = this.handleImgPreview.bind(this);
+    this.hideImgPreview = this.hideImgPreview.bind(this);
   }
 
   // function checkLogin
@@ -89,6 +106,16 @@ class App extends React.Component {
     });
   }
 
+  hideImgPreview() {this.setState({showImgPreview: false,});}
+
+  handleImgPreview(e) {
+    console.log(e.target);
+    this.setState({
+      imgPreview: <ImgPreview assetPath={e.target.src} assetName={e.target.alt} closePreview={this.hideImgPreview} />,
+      showImgPreview: true,
+    })
+  }
+
   render() {       
     return (
       <div className="App">
@@ -96,6 +123,9 @@ class App extends React.Component {
         <main className="grid">
         {this.state.showAlert 
           ? this.state.alert 
+          : ''}
+        {this.state.showImgPreview
+          ? this.state.imgPreview
           : ''}
         {this.state.userIsLoggedIn 
           ? <DashboardToolbar /> 
@@ -114,7 +144,9 @@ class App extends React.Component {
             <Route 
               exact={true} 
               path="/gallery" 
-              component={Gallery} />
+              render={(props) => <Gallery 
+                                  {...props} 
+                                  handleImgPreview={this.handleImgPreview} />} />
 
             <Route 
               exact={true} 
@@ -133,16 +165,17 @@ class App extends React.Component {
                   handleAlert={this.handleAlert}/>
             }/>
 
-            <Route 
+            {/* <Route 
               path="/register" 
-              render={(props) => <Register {...props} handleAlert={this.handleAlert}/>} />
+              render={(props) => <Register {...props} handleAlert={this.handleAlert}/>} /> */}
 
             <Route 
               path="/dashboard" 
               render={(props) =>
                 this.state.userIsLoggedIn
                 ? <Dashboard {...props} 
-                    handleAlert={this.handleAlert} 
+                    handleAlert={this.handleAlert}
+                    handleImgPreview={this.handleImgPreview} 
                     userData={this.state.userData}/> 
                 : <Redirect to="/login" />
               }/>

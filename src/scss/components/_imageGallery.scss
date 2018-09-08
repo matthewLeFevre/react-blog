@@ -2,18 +2,18 @@
 	padding: 1em 0;
 	display: grid;
 	grid-gap: 5px;
-	grid-template-columns: repeat(auto-fill, 250px);
+	grid-template-columns: repeat(auto-fill, 300px);
 	grid-auto-rows: 250px;
 	grid-auto-flow: row;
 	justify-content: center;
 	width: 100%;
-	@include bp($bp-tab-mid) {
+	@include bp-mdm {
 		width: 90%;
 		margin: 3em auto;
 	}
 }
 
-.gallery__item {
+.gallery__img__wrapper {
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
@@ -41,12 +41,12 @@
 .gallery__container--image-pick {
 	position: absolute;
 	background-color: $white;
-	box-shadow: $box-shadow;
+	// box-shadow: $box-shadow;
 	left: 0;
 	top: 8em;
 	width: 90%;
 	margin: 0 5%;
-	@include bp($bp-tab-mid) {
+	@include bp-mdm {
 		width: 50%;
 		margin: 0 25%;
 	}

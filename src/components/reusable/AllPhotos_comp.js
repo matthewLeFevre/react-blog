@@ -66,12 +66,12 @@ class AllPhotos extends React.Component {
               ? this.state.photos.map((asset) => {
                 if(this.state.search !== '') {
                   if (asset.assetName.includes(this.state.search)) {
-                    return <ImageItem  handleAlert={this.props.handleAlert} userData={this.props.userData} deletePhoto={this.props.deletePhoto}  asset={asset} key={Global.createRandomKey(7)}  />
+                    return <ImageItem handleImgPreview={this.props.handleImgPreview}  handleAlert={this.props.handleAlert} userData={this.props.userData} deletePhoto={this.props.deletePhoto}  asset={asset} key={Global.createRandomKey(7)}  />
                   } else {
                     return '';
                   }
                 } else {
-                  return <ImageItem  handleAlert={this.props.handleAlert} userData={this.props.userData} deletePhoto={this.props.deletePhoto}  asset={asset} key={Global.createRandomKey(7)}  />
+                  return <ImageItem handleImgPreview={this.props.handleImgPreview} handleAlert={this.props.handleAlert} userData={this.props.userData} deletePhoto={this.props.deletePhoto}  asset={asset} key={Global.createRandomKey(7)}  />
                 }
               }) 
               : ''
@@ -130,7 +130,7 @@ class ImageItem extends React.Component {
             </div>
           </div>
           <div className="control-card__footer force-btn">
-            <button className="btn primary tiny breath">Preview</button>
+            <button className="btn primary tiny breath" onClick={this.props.handleImgPreview} type='button' alt='' src={this.props.asset.assetPath}>View</button>
           {this.state.assetStatus === "saved"
               ? <button type="button" value="published" onClick={this.handleStatusUpdate} className="btn primary tiny breath">Private</button>
               : <button type="button" value="saved" onClick={this.handleStatusUpdate} className="btn secondary tiny breath">Published</button>}

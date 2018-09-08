@@ -1,9 +1,13 @@
 @mixin alert($type: "") {
     position: fixed;
-    width: 100%;
+    width: 80vw;
+    min-width: 300px;
     padding: 1em;
-    top: 0;
+    top: 2em;
+    left: 10vw;
+    right: 10vw;
     z-index: $z-5;
+    border-radius: $br;
 
     .close {
         display: none;

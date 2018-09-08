@@ -28,10 +28,6 @@ class AllPosts extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('recieving props');
-    console.log("=========================");
-    console.log(newProps.refreshPosts);
-    console.log(this.state.refreshPosts);
     if(newProps.refreshPosts !== this.state.refreshPosts) {
       this.setState({refreshPosts: newProps.refreshPosts});
       fetch(`${Global.url}?controller=article&action=getArticlesByUserId&userId=${this.props.userData.userId}&apiToken=${this.props.userData.apiToken}`)

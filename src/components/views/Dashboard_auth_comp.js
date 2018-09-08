@@ -32,7 +32,7 @@ class Dashboard extends React.Component {
         <Switch>
           <Route 
             path="/dashboard/profile"
-            render={(props) => <DashboardProfile handleAlert={this.props.handleAlert}{...props} userData={this.props.userData} />}/>
+            render={(props) => <DashboardProfile handleImgPreview={this.props.handleImgPreview} handleAlert={this.props.handleAlert} {...props} userData={this.props.userData} />}/>
           {/* <Route 
             path="/dashboard/messages" 
             render={(props) => <h1> You made it to messages </h1> }/>

@@ -11,7 +11,7 @@ $modal-sizes: (
 }
 
 .modal__container {
-    z-index: $z-5;
+  z-index: $z-5;
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -27,7 +27,7 @@ $modal-sizes: (
 .modal {
 	min-width: 300px;
 	width: 70vw;
-	max-width: 1000px;
+	max-width: 600px;
 	background-color: white;
 	border-radius: 4px;
 }
@@ -65,6 +65,18 @@ $modal-sizes: (
 	p {
 		margin-bottom: 1em;
 	}
+}
+
+.modal__img__preview {
+	width: 100%;
+	max-width: 600px;
+	display: block;
+	vertical-align: middle;
+}
+
+.modal__img__preview__wrapper {
+	max-height: 700px;
+	overflow: hidden;
 }
 
 @media screen and (min-width: 40em) {

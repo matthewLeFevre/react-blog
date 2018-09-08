@@ -17,15 +17,18 @@ class CreatePost extends React.Component {
     super(props);
 
     this.state = {
-      edit: false,
-      imageSelectIsOpen: false,
+      // Article Related state
       articleTitle: '',
       articleSummary: '',
       articleBody: '',
       articleStatus: '',
-      articleLink: '',
-      showImageModal: false,
+      edit: false,
+      // Image Related State
+      imagePurpose: '',
+      imageSelectIsOpen: false,
       showImage: false,
+      showImageModal: false,
+      // Redirecting state
       redirectDashboard: false,
     }
 
@@ -37,12 +40,19 @@ class CreatePost extends React.Component {
     this.proccessPost = this.proccessPost.bind(this);
     this.proccessExistingPost = this.proccessExistingPost.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    this.toggleImageSelect = this.toggleImageSelect.bind(this);
-    this.toggleImageModal = this.toggleImageModal.bind(this);
+
+    // Image Related event handlers
+    this.useBlogImage = this.useBlogImage.bind(this);
+    this.useBodyImage = this.useBodyImage.bind(this);
     this.changeBlogImage = this.changeBlogImage.bind(this);
-    this.useImage = this.useImage.bind(this);
+    this.toggleImageModal = this.toggleImageModal.bind(this);
+    this.toggleImageSelect = this.toggleImageSelect.bind(this);
+    this.toggleBlogImageSelect = this.toggleBlogImageSelect.bind(this);
+    this.toggleBodyImageSelect = this.toggleBodyImageSelect.bind(this);
   }
 
+  // If we are editing a post we will first have to fetch the 
+  // article from the db and then fill in the data for it.
   componentDidMount () {
     if(this.props.edit) {
       fetch(`${Global.url}?controller=article&action=getArticleById&articleId=${this.props.match.params.id}"`)
@@ -77,6 +87,8 @@ class CreatePost extends React.Component {
     this.setState({articleBody: this.articleBody.current.innerHTML}); 
   }
 
+  // Sends request and handles server response
+  // for creating a new post
   proccessPost(e) {
 
     //define this logic
@@ -130,6 +142,8 @@ class CreatePost extends React.Component {
     });
   }
 
+  // Sends request and handles server response
+  // for editing an existing post
   proccessExistingPost(e){
     console.log(e.target.value);
     let date = new Date();
@@ -168,20 +182,38 @@ class CreatePost extends React.Component {
     });
   }
 
-  // Manipulation Events
-  toggleImageSelect() {
+  // Closes the Image select modal
+  toggleImageSelect () {
+    this.setState({
+      imageSelectIsOpen: false,
+    });
+  }
+
+  // Opens Image Select tool in Blog Image Mode
+  toggleBlogImageSelect() {
     this.setState(prevState =>({
+      imagePurpose: 'blogImage',
       imageSelectIsOpen: !prevState.imageSelectIsOpen,
     }));
   }
 
+  // Opens Image Select tool in Body Image Mode
+  toggleBodyImageSelect () {
+    this.setState(prevState => ({
+      imagePurpose: 'bodyImage',
+      imageSelectIsOpen: !prevState.imageSelectIsOpen,
+    }));
+  }
+
+  // When wysiwyg actions are preformed they are audited by
+  // this handleEdit function
   handleEdit(action) {
     if( action === 'h2' ||
         action === 'h3' ||
         action === 'p') {
       document.execCommand('formatBlock', false, action);
     } else if (action === 'image') {
-      this.toggleImageSelect();
+      this.toggleBodyImageSelect();
     } else if (action === 'createlink') {
       let url = prompt('Enter the link here: ', 'http://');
       document.execCommand(action, false, url);
@@ -190,18 +222,24 @@ class CreatePost extends React.Component {
     }
   }
 
+  // Helps keep formating in the content editable section
+  // that is our blog body
   htmlDecode(input){
     var e = document.createElement('div');
     e.innerHTML = input;
     return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
   }
 
+  // Instead of opening up the Image select tool
+  // this function opens up an Image modal that 
+  // is used to select images through url
   toggleImageModal(e) {
     this.setState(prevState => ({
       showImageModal: !prevState.showImageModal,
     }));
   }
 
+  // Helps with the `toggleImageModal` funciton
   changeBlogImage(e) {
     this.setState({
       showImage: e.target.value,
@@ -209,15 +247,26 @@ class CreatePost extends React.Component {
     this.toggleImageModal();
   }
 
-  useImage(e) {
+// Adds an image to the Blog
+  useBlogImage(e) {
+    console.log('blogImg');
     this.setState({
-      showImage: e.target.value,
+      showImage: e.target.src,
       imageSelectIsOpen: false,
     });
   }
+  
+// Adds an image to the Body of the blog
+  useBodyImage(e) {
+    console.log('bodyImg');
+    this.setState({
+      imageSelectIsOpen: false,
+    });
+    document.execCommand('insertImage', false, e.target.src);
+  }
 
   render() {
-
+    console.log(this.state.imageSelectIsOpen);
     if(this.state.redirectDashboard) {
       return(
         <Redirect to="/dashboard/profile"/>
@@ -230,7 +279,12 @@ class CreatePost extends React.Component {
         ? this.state.alert
         : ''
       }
-      <ImageSelect userData={this.props.userData} isOpen={this.state.imageSelectIsOpen} toggle={this.toggleImageSelect} useImage={this.useImage}/>
+      <ImageSelect purpose={this.state.imagePurpose} 
+                   userData={this.props.userData} 
+                   isOpen={this.state.imageSelectIsOpen} 
+                   toggle={this.toggleImageSelect} 
+                   useBlogImage={this.useBlogImage} 
+                   useBodyImage={this.useBodyImage}/>
       {this.state.showImageModal
         ? <ImageModal toggleImageModal={this.toggleImageModal}
                       changeBlogImage={this.changeBlogImage}/>
@@ -251,7 +305,7 @@ class CreatePost extends React.Component {
             type="button">Add file by url</button>
           <button 
             className="btn blog__image-viewer"
-            onClick={this.toggleImageSelect}
+            onClick={this.toggleBlogImageSelect}
             type="button">Select from uploaded Images</button>
         {this.state.showImage
           ? <img className="blog__image-view" src={this.state.showImage} alt={this.state.showImage} />
