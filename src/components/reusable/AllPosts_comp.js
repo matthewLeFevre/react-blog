@@ -146,7 +146,7 @@ class PostCard extends React.Component {
             className="item-card__img" />
           <div className="control-card__text">
             <h5 className="control-card__heading">{`${this.props.article.articleTitle.slice(0, 17)}...`}</h5>
-            <p className="control-card__description">{this.props.article.articleSummary ? `${this.props.article.articleSummary.slice(0, 60)}...` : "Lorum ipsum dolor profundis Lorume ispsume dolor profunids"}</p>
+            <p className="control-card__description">{this.props.article.articleSummary ? `${Global.htmlDecode(this.props.article.articleSummary.slice(0, 60))}...` : "Lorum ipsum dolor profundis Lorume ispsume dolor profunids"}</p>
           </div>
         </div>
         <div className="control-card__footer force-btn">

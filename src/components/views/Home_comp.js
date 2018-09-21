@@ -57,10 +57,9 @@ const HomeIntro = () => {
         <h1 className="home-intro__heading">Courtney LeFevre</h1>
         <p className="home-intro__message">I am a member of The Church of Jesus Christ of Latter-Day Saints. I love to write and wanted to share my experiences with others. I will write blogs about my spiritual experiences, parenting experiences and just updates on my life. I hope you like what you read!</p>
         <div>
-          <a className="btn icon action breath sml"><i className="fab fa-facebook-f"></i></a>
-          <a className="btn icon action breath sml"><i className="fab fa-instagram"></i></a>
-          <a className="btn icon action breath sml"><i className="fab fa-blogger"></i></a>
-          <a className="btn icon action breath sml"><i className="fas fa-envelope"></i></a>
+          <a className="btn icon action breath sml" href="https://www.facebook.com/courtney.marie.18294?lst=100001654375445%3A100003072898110%3A1536430225" rel="noopener noreferrer" target="_blank"><i className="fab fa-facebook-f"></i></a>
+          <a className="btn icon action breath sml" href="https://www.instagram.com/courtneymlefevre/" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a>
+          <a className="btn icon action breath sml" href="mailto:lefevreblog@gmail.com?subject=Hello%20Courtney!" target="_top"><i className="fas fa-envelope"></i></a>
         </div>
       </figcaption>
     </figure>

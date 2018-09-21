@@ -6,8 +6,8 @@ class Globals {
 
   // production only url
   // url= 'http://courtney.matthew-lefevre.com/server.php';
-  // url= 'http://courtneylefevre.com/server.php';
-  url= 'http://site2/server.php';
+  url= 'http://courtneylefevre.com/server.php';
+  // url= 'http://site2/server.php';
 
   headers= {
     "Content-Type": "application/json",
@@ -46,6 +46,12 @@ class Globals {
     }
 
     return body;
+  }
+
+  htmlDecode(input){
+    var e = document.createElement('div');
+    e.innerHTML = input;
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
   }
 }
 

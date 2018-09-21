@@ -23,12 +23,18 @@ class Post extends React.Component {
       let date = new Date(data.data[0].articleCreated);
       this.setState({
         articleTitle: data.data[0].articleTitle,
-        articleSummary: data.data[0].articleSummary,
+        articleSummary: this.htmlDecode(data.data[0].articleSummary),
         articleBody: data.data[0].articleBody,
         articleCreated: date.toDateString(),
         articleImagePath: data.data[0].articleImagePath,
       },  ()=> this.articleBody.current.innerHTML = this.htmlDecode(this.state.articleBody));
     });
+  }
+
+  htmlDecode(input){
+    var e = document.createElement('div');
+    e.innerHTML = input;
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
   }
 
   render() {

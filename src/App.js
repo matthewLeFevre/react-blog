@@ -32,13 +32,13 @@ import Login from './components/forms/Login_comp';
 
 // Trying to figure out Google analytics
 
-ReactGA.initialize();
+// ReactGA.initialize();
 
-const history = createHistory();
-history.listen((location, action) => {
-  ReactGA.set({ page: location.pathname });
-  ReactGA.pageview(location.pathname);
-});
+// const history = createHistory();
+// history.listen((location, action) => {
+//   ReactGA.set({ page: location.pathname });
+//   ReactGA.pageview(location.pathname);
+// });
 
 //================================
 // App Class

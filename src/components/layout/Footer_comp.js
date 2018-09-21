@@ -24,10 +24,11 @@ class Footer extends React.Component {
       authenticated: this.props.auth,
       footer_sections: [
         [
-          {name: "Archive", link:"/archive"},
+          // {name: "Archive", link:"/archive"},
           {name: "Blog", link:"/blog"},
           {name: "About Me", link:"/about"},
-          {name: "Contact", link:"/contact"}
+          {name: "Gallery", link:"/gallery"},
+          // {name: "Contact", link:"/contact"}
         ],
       ]
     }

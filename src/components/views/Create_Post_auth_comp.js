@@ -58,11 +58,10 @@ class CreatePost extends React.Component {
       fetch(`${Global.url}?controller=article&action=getArticleById&articleId=${this.props.match.params.id}"`)
       .then(response => response.json())
       .then( (data) => {
-        console.log(data);
         this.setState({
           edit: this.props.edit,
           articleTitle: data.data[0].articleTitle,
-          articleSummary: data.data[0].articleSummary,
+          articleSummary: Global.htmlDecode(data.data[0].articleSummary),
           articleBody: data.data[0].articleBody,
           articleLink: data.data[0].articleLink,
           articleId: data.data[0].articleId,
@@ -266,7 +265,6 @@ class CreatePost extends React.Component {
   }
 
   render() {
-    console.log(this.state.imageSelectIsOpen);
     if(this.state.redirectDashboard) {
       return(
         <Redirect to="/dashboard/profile"/>

@@ -56,7 +56,7 @@ class Navigation extends React.Component {
         {name: "About Me", title:"placeholder", link:"/about"},
         {name: "Home", title:"placeholder", link:"/"},
         {name: "Gallery", title:"placeholder", link:"/gallery"},
-        {name: "Contact", title:"placeholder", link:"/contact"},
+        // {name: "Contact", title:"placeholder", link:"/contact"},
       ]
     }
   }

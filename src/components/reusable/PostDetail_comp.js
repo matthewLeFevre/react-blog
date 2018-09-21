@@ -2,6 +2,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+import Globals from '../../services/global_service';
+
+const Global = new Globals();
+
 const PostDetail = props => {
   let date = new Date(props.post.articleCreated);
   return (
@@ -16,7 +20,7 @@ const PostDetail = props => {
         } alt={props.post.assetName} />
       </div>
       
-      <p>{props.post.articleSummary}</p>
+      <p>{Global.htmlDecode(props.post.articleSummary)}</p>
     </Link>
   );
 }
